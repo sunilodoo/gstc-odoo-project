@@ -1,0 +1,1 @@
+# gstc-odoo-project
