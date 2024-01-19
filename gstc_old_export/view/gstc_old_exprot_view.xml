@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data> 
+		<!-- Packing List -->
+     <record id="gstc_old_export_form_view" model="ir.ui.view">
+        <field name="name">old.export.form</field>
+        <field name="model">old.export</field>
+        <field name="arch" type="xml">
+			<form string="Old Export" >
+				<sheet>
+				<group>
+					<group>
+						<field name='partner_id'/>
+						<field name='exporter_id' options="{'no_create': True, 'no_create_edit':True}" />
+						<field name='consignee' options="{'no_create': True, 'no_create_edit':True}" />
+						<field name='notify' options="{'no_create': True, 'no_create_edit':True}" />
+						<field name='country_id'/>
+						<field name='payment_term_id'/>
+						<field name='carrier_id'/>
+						<field name="incoterm_id"/>
+						<field name='mkt_coordinator' />
+						<field name="port_loading"/>
+						<field name="pl_receipt"/>
+						<field name='dispatched_date'/>
+						<field name="port_discharge"/>
+						<field name='discharge_eta_date'/>
+
+						<!--<field name="active"
+                                options='{"terminology": "archive"}' groups="base.group_erp_manager"/>-->
+					</group>
+					<group>
+						<field name="order_no"/>
+						<field name="order_date"/>
+						<field name='company_id' invisible="1"/>
+						<field name="name"/>
+						<field name='date_invoice'/>
+						<field name='financial_year'/>
+						<field name='amount'/>
+						<field name='exchange_rate'/>
+						<field name='actual_sale_inr' digits="(14, 0)"/>
+						<field name='amount_inr' digits="(14, 0)"/>
+						<field name='difference_in_sale' digits="(14, 0)"/>
+						<field name='total_purchase' digits="(14, 0)" readonly="1" />
+						<field name='lc_banking_cost' digits="(14, 0)"/>
+						<field name='shippig_cost' digits="(14, 0)"/>
+						<field name='packing_cost' digits="(14, 0)"/>
+						<field name='commission'/>
+						<field name='commission_amt'/>
+						<field name='total_gross_margin'/>
+						<field name='total_gross_percent'/>
+						<field name='total_grwt'/>
+						<field name='total_ntwt'/>
+						<label for="total_vol_manuall" string="Volume Weight"/>
+						<div><field name="total_vol_manuall" digits="(14, 6)"/>
+						<field name="vol_unit"/></div>
+
+					</group>
+				</group>
+				<group>
+					<group>
+						<field name='origin_country'/>
+						<field name='destination_country'/>
+						<field name='dest_country'/>
+						<field name='destination_eta_date'/>
+					</group>
+					<group>
+						<field name='stuffing_date'/>
+						<field name='railing_date'/>
+						<field name='container_no'/>
+						<field name='custom_seal_no'/>
+						<field name='line_seal_no'/>
+						<field name='agency_seal_no'/>
+					</group>
+				</group>
+
+				<group>
+					<group>
+						<field name="ship_airline_name"/>
+						<field name="vessel_flight_name"/>
+						<field name='ship_onboard_airlift_date'/>
+						<field name="port_arrival_date"/>
+						<field name='port_vessel_flight_name'/>
+						<field name='port_onboard_airlift_date'/>
+						<field name="active"
+                                options='{"terminology": "archive"}' groups="base.group_erp_manager"/>
+					</group>
+					<group>
+						<field name="export_image" widget="many2many_binary" string="Upload file" class="oe_inline" />
+					</group>
+				</group>
+
+				<notebook>
+					<page string="Documentation" >
+						<group>
+							<group>
+								<field name='shipping_bill_no'/>
+								<field name='shipping_bill_date'/>
+								<field name='port_code' />
+								<field name='drawback_amount'/>
+								<field name="bl_awb_no"/>
+								<field name="bl_awb_date"/>
+							</group>
+							<group>
+								<field name="document_send_date"/>
+								<field name='document_tracking_no'/>
+								<field name="courier_name"/>
+								<field name='document_delvy_date'/>
+							</group>
+						</group>
+					</page>
+					<page string="CUSTOM CLEARANCE CHARGES" >
+						<group>
+							<group>
+								<field name='cha_name'/>
+								<field name='service_charge'/>
+								<field name='shipping_process_fee' />
+								<field name='measurement_fee'/>
+								<field name="load_upload_fee"/>
+								<field name="adc_noc_fee"/>
+							</group>
+							<group>
+								<field name="challan_penalty_fee"/>
+								<field name='clearance_misc_fee'/>
+								<field name="clearance_subtotal_fee"/>
+								<field name="clearance_tax_fee"/>
+								<field name="clearance_total_fee"/>
+								<field name='clearance_remarks'/>
+							</group>
+						</group>
+					</page>
+
+					<page string="FORWARDERS / SHIPPING LINE CHARGES" >
+						<field name="shipping_line_charges">
+							<tree editable="bottom" string="FORWARDERS / SHIPPING LINE CHARGES">
+								<field name='name'/>
+								<field name='freight'/>
+								<field name='on_carriage' />
+								<field name='thc_fee'/>
+								<field name="ihc_fee"/>
+								<field name="bl_awb_fee"/>
+								<field name="vgm_ens_fee"/>
+								<field name='tc_reciept_fee'/>
+								<field name="custom_duty_fee"/>
+								<field name='dest_exp_fee'/>
+								<field name='transport_fee'/>
+								<field name="shipping_misc_fee" sum="Total"/>
+								<field name='shipping_subtotal_fee' sum="Total"/>
+								<field name='shipping_tax_fee'/>
+								<field name='shipping_total_fee' sum="Total"/>
+								<field name='shipping_remarks'/>
+							</tree>
+						</field>
+					</page>
+
+					<page string="OTHER CHARGES" >
+						<group>
+							<group>
+								<field name='other_transport_fee'/>
+								<field name='other_ihc_fee'/>
+								<field name='other_certificate_fee' />
+								<field name='other_insurance' />
+							</group>
+							<group>
+								<field name="other_inspection_fee"/>
+								<field name='other_misc_fee'/>
+								<field name="other_subtotal_fee"/>
+								<field name="other_tax_fee"/>
+								<field name="other_total_fee"/>
+								<field name='other_remarks'/>
+							</group>
+						</group>
+					<button name="payment_difference" class="oe_highlight" string="Update Payment Diff" type="object" groups="base.group_erp_manager"/>
+					<button name="create_shipping_panel" class="oe_highlight" string="Create Shipping Panel" type="object" groups="base.group_erp_manager"/>
+					</page>
+				</notebook>
+			</sheet>
+			</form>
+        </field>
+    </record>
+
+	<record id="gstc_old_export_tree_view" model="ir.ui.view">
+		<field name="name">old.export.tree</field>
+		<field name="model">old.export</field>
+		<field name="arch" type="xml">
+			<tree string="Old Export" class='custom_size' colors="red:actual_sale_inr &gt; amount_inr;green:amount_inr &gt; actual_sale_inr">
+				<field name='partner_id'/>
+				<field name='country_id'/>
+				<field name='exporter_id' />
+				<field name='payment_term_id'/>
+				<field name="incoterm_id"/>
+				<field name="order_no"/>
+				<field name="order_date"/>
+				<field name='mkt_coordinator' />
+				<field name='carrier_id'/>
+				<field name="port_loading"/>
+				<field name="port_discharge"/>
+				<field name='name'/>
+				<field name='date_invoice'/>
+				<field name='amount' sum="Total" style="font-weight: bold;"/>
+				<field name='exchange_rate' style="font-weight: bold;"/>
+				<field name='actual_sale_inr' sum="Total" style="font-weight: bold;" digits="(14, 0)"/>
+				<field name='amount_inr' sum="Total" style="font-weight: bold;" digits="(14, 0)"/>
+				<field name='difference_in_sale' sum="Total" style="font-weight: bold;" digits="(14, 0)"/>
+				<field name='total_gross_margin' sum="Total" style="font-weight: bold;"/>
+				<field name='total_gross_percent' style="font-weight: bold;"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="custom_filter_old_export" model="ir.ui.view">
+        <field name="name">old.export.filter</field>
+        <field name="model">old.export</field>
+        <field name="arch" type="xml">
+			 <search string="Search Sales Executed">
+				<field name="order_no" string="Order No" filter_domain="[('order_no','ilike',self)]"/>
+	            <field name="exporter_id" string="Exporter" filter_domain="[('name','ilike',self)]"/>
+				<field name="country_id" string="Country"/>
+				<field name="partner_id" string="Buyer"/>
+				<field name="name" string="Invoice" filter_domain="[('invoice','ilike',self)]"/>
+		        <field name="financial_year" string="Financial Year" filter_domain="[('financial_year','ilike',self)]"/>
+				<group expand="1" string="Group By">
+					<filter string="Exporter" context="{'group_by':'exporter_id'}"/>
+					<filter string="Coordinator" context="{'group_by':'mkt_coordinator'}"/>
+					<filter string="Buyer" context="{'group_by':'partner_id'}"/>
+	                <filter string="Country" context="{'group_by':'country_id'}"/>
+		            <filter string="Financial Year" context="{'group_by':'financial_year'}"/>
+		            <filter string="Order Month" context="{'group_by':'order_date'}"/>
+		            <filter string="Executed Month" context="{'group_by':'date_invoice'}"/>
+	            </group>
+			</search>
+        </field>
+    </record>
+
+	
+	<record model="ir.actions.act_window" id="action_old_export_view_form">
+		 <field name="name">Executed Sales</field>
+		 <field name="res_model">old.export</field>
+		 <field name="view_mode">tree,form</field>
+	</record>
+	<menuitem id="menu_gstc_old_export" action="action_old_export_view_form" parent="sales_team.menu_sales" sequence="12"/>
+
+    </data>
+</openerp>

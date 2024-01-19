@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data>
+<!-- Sale Order Inherit Start -->
+             <record id="view_order_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order Form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+            
+                <!-- <xpath expr="//tree/field[@name='tax_id']" position="attributes">
+					<attribute  name="invisible">1</attribute>
+                </xpath> -->
+				  <field name="note" position="after">
+						<group>
+							<field name="cbm_total" digits="(14, 4)" />
+          					<field name="total_vol_wt_total" digits="(14, 4)" />
+	  	  					<field name="total_nwt_crtn_total" digits="(14, 4)" />
+	  	  					<field name="total_gwt_crtn_total" digits="(14, 4)" />
+							<field name="show_disc"/>
+     				        <field name="show_ex_chrgs"/>
+						</group>
+				</field>
+                
+	       		<xpath expr="//field[@name='order_line']/tree//field[@name='tax_id']" position="replace">
+					<field name="tax_id" invisible="1"/>
+		  		</xpath>
+                
+          <xpath expr="//field[@name='amount_tax']" position="attributes">
+            <attribute name="groups">sale_order_hide_tax.show_taxes_column_in_sale_orders</attribute>
+          </xpath>
+          <xpath expr="//field[@name='amount_untaxed']" position="attributes">
+            <attribute name="groups">sale_order_hide_tax.show_taxes_column_in_sale_orders</attribute>
+          </xpath>
+          
+          <xpath expr="//field[@name='amount_total']" position="after">
+          <field name="freight_charge"/>
+          </xpath>
+          <xpath expr="//field[@name='freight_charge']" position="after">
+          <field name="bank_charge"/>
+		  <field name="global_disc" attrs="{'invisible':[('show_disc', '!=', True)]}"/>
+		  <field name="chrgs_inf" attrs="{'invisible':[('show_ex_chrgs', '!=', True)]}"/>
+          <field name="ext_chrgs" attrs="{'invisible':[('show_ex_chrgs', '!=', True)]}"/>
+          <field name="full_total"/>
+          </xpath>         
+                    <xpath expr="//field[@name='tax_id']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                    </xpath>
+                    <xpath expr="//field[@name='note']" position="attributes">
+                        <attribute name="invisible">1</attribute>
+                    </xpath>
+                    <xpath expr="//group[@name='sales_person']" position="before">
+                    <separator string="Freight  Information"/>
+                        <br/>
+                        <group colspan="2"  col="2">
+                        <field name="via_freight"/>
+                        </group>
+                    </xpath>    
+                     <xpath expr="//field[@name='user_id']" position="before">
+                    </xpath>
+                    
+                    <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="remarks"/>
+                    </xpath>
+                    <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="buyer_ref"/>
+                    </xpath>
+                    <xpath expr="//field[@name='buyer_ref']" position="after">
+                    <field name="incoterms"/>
+                    </xpath>
+                    <xpath expr="//field[@name='payment_term_id']" position="after">
+                    <field name="delivery_time"/>
+                    </xpath>
+            </field>
+        </record>
+
+		<!-- Sale Order Tree Inherit -->
+     <record id="custom_sale_order_tree_view" model="ir.ui.view">
+        <field name="name">sale.order.tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+			<tree position="attributes">
+			   <attribute name="colors">
+			   green:state in ('sale','done')</attribute>
+			</tree>
+			<field name="amount_total" position="replace">
+				<field name="full_total" widget="monetary"/>
+			</field>
+        </field>
+    </record>
+
+	<record id="custom_sale1_order1_tree_view" model="ir.ui.view">
+        <field name="name">sale.order.tree</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree"/>
+        <field name="arch" type="xml">
+			<tree position="attributes">
+			   <attribute name="colors">
+			   green:state in ('sale','done')</attribute>
+			</tree>
+			<field name="amount_total" position="replace">
+				<field name="full_total" widget="monetary"/>
+			</field>
+        </field>
+    </record>
+        
+     <!-- Product Attribute Inherit -->
+     <record id="product_template_only_form_view" model="ir.ui.view">
+        <field name="name">product.template.product.form</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_only_form_view"/>
+        <field name="arch" type="xml">
+           <field name="list_price" position="after">
+				<field name="comp" invisible="1"/>
+			</field>
+          <xpath expr="//field[@name='value_ids']" position="after">
+           		<field name="no_of_item" invisible="1"/>
+		  </xpath>
+		  <xpath expr="//field[@name='no_of_item']" position="after">
+           		<field name="item_code"/>
+           		<field name="no_of_catons"/>
+           		<field name="net_weight"/>
+           		<field name="gross_weight"/>
+				<field name="no_of_item"/>
+
+           		<field name="toal_qty_carton"/>
+           		<field name="carton_nwt"/>
+           		<field name="carton_gwt"/>
+				<field name="x_attr"/>
+				<field name="y_attr"/>
+           		<field name="z_attr"/>
+				<field name="total_qty" invisible="1"/>
+           		<field name="cartons" invisible="1"/>
+				<field name="vol_wt"/>
+           			
+		  </xpath>          
+          <xpath expr="//field[@name='vol_wt']" position="after">
+          	<field name="cbm" invisible="1"/>
+          	<field name="total_vol_wt" invisible="1"/>
+          	<field name="total_nwt_crtn" invisible="1"/>
+          	<field name="total_gwt_crtn" invisible="1"/>
+          </xpath>  
+        </field>
+    </record>
+    
+         
+</data>
+</odoo>

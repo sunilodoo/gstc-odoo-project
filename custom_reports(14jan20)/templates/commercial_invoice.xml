@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="commercial_invoice"  >
+        <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+            <!--<t t-call="report.external_layout">-->
+ 
+                    <div class="header">
+                    <table class="table table-condensed table-bordered">
+                        <thead>
+                        <th class="text-center" colspan="4">COMMERCIAL INVOICE</th>
+                        </thead>
+                        <tbody>
+                            <tr >
+                                <td  colspan="2">
+                                    <t t-if="o.company_id">
+                                        <strong>Merchant Exporter:</strong>
+                                        <div style="font-size:12px;" t-field="o.company_id.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;,&quot;phone&quot;,&quot;mobile&quot;,&quot;fax&quot;,&quot;email&quot;], &quot;no_marker&quot;: True}"/>
+                                        <span t-if="o.company_id.gstn"><strong>GSTIN: </strong><span style="font-size:12px;" t-field="o.company_id.gstn"/><br/></span>
+                                        <span t-if="o.company_id.vat"><strong>CIN: </strong><span t-field="o.company_id.vat"/></span>
+
+		                            		</t>
+		                            </td>
+		                             <td padding="0px" colspan="2">
+                                    <table class="table table-condensed" style="cell-padding:0px; font-size:11px; line-height:10px;">
+                                        <tr style="border-top-style:none !important;">
+                                            <td style="border-top-style:none !important;"><strong>Invoice No.&amp; Date:</strong></td>
+                                            <td colspan='2' style="border-top-style:none !important;"><span t-field="o.inv_no"/> DT. <span t-field="o.date_invoice"/> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Buyer's Order No.&amp; Date:</strong></td>
+                                            <td colspan='2'><span t-field="o.order_no"/> DT. <span t-field="o.order_date"/> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Country Of Origin:</strong></td>
+                                            <td colspan='2'><span t-field="o.origin_country"/> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Contry Of Destination:</strong></td>
+                                            <td colspan='2'><span t-field="o.dest_country"/> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Mode Of Shipment:</strong></td>
+                                            <td colspan='2'><t t-esc="get_order(o)[0]['mode_of_ship']"/> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Nature Of Payment:</strong></td>
+                                            <td colspan='2'><t t-esc="get_order(o)[0]['natur_payment']"/> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Terms Of Delivery:</strong></td>
+                                            <td colspan='2'><t t-esc="get_order(o)[0]['delivery_term']"/> </td>
+                                        </tr>
+                                    </table>
+		                            </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="height: 160px;">
+                                    <t t-if="o.is_consignee and o.consignee and (o.partner_id != o.consignee)">
+		                                <strong>Consignee:</strong>
+                                        <div style="font-size:12px;" t-field="o.consignee" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;,&quot;phone&quot;,&quot;mobile&quot;,&quot;fax&quot;,&quot;email&quot;], &quot;no_marker&quot;: True}"/>
+                                        <span t-if="o.consignee.vat">TIN: <span style="font-size:12px;" t-field="o.partner_id.vat"/></span>
+		                            </t>
+									<t t-if="not o.is_consignee">
+                                        <strong>Consignee:</strong>
+                                        <div style="font-size:12px;" t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;,&quot;phone&quot;,&quot;mobile&quot;,&quot;fax&quot;,&quot;email&quot;], &quot;no_marker&quot;: True}"/>
+                                        <span t-if="o.partner_id.vat">TIN: <span style="font-size:12px;" t-field="o.partner_id.vat"/></span>
+		                            </t>
+									<t t-if="(o.partner_id == o.consignee) and o.is_consignee and o.consignee">
+                                        <strong>Consignee:</strong>
+                                        <div style="font-size:12px;" t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;,&quot;phone&quot;,&quot;mobile&quot;,&quot;fax&quot;,&quot;email&quot;], &quot;no_marker&quot;: True}"/>
+                                        <span t-if="o.partner_id.vat">TIN: <span style="font-size:12px;" t-field="o.partner_id.vat"/></span>
+		                            </t>
+		                            </td> 
+		                            <td  colspan="2">
+                                    <t t-if="(o.is_consignee) and o.partner_id != o.consignee">
+                                        <strong>Buyer(if other than consignee):</strong>
+                                        <div style="font-size:12px;" t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;,&quot;phone&quot;,&quot;mobile&quot;,&quot;fax&quot;,&quot;email&quot;], &quot;no_marker&quot;: True}"/>
+                                        <span t-if="o.partner_id.vat">TIN: <span style="font-size:12px;" t-field="o.partner_id.vat"/></span>
+                                    </t>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                            <div class="page">
+                            <table class="table table-condensed table-bordered">
+                            <tbody>
+                            <tr style="font-size:11px;">
+                                <td ><strong>Pre-carrier By:</strong></td>
+                                <td><span t-field="o.pre_carrier"/></td>
+                                <td><strong>Place of Reciept:</strong></td>
+                                <td><span t-field="o.pl_receipt"/></td>
+                            </tr>
+                            <tr style="font-size:11px;">
+                                <td><strong>Vessel/Flight No.:</strong></td>
+                                <td><span t-field="o.flight_no"/></td>
+                                <td><strong>Port Of Loading:</strong></td>
+                                <td><span t-field="o.port_loading"/></td>
+                            </tr>
+                            <tr style="font-size:11px;">
+                                <td><strong>Port of Discharge:</strong></td>
+                                <td><span t-field="o.port_discharge"/></td>
+                                <td><strong>Final Destination:</strong></td>
+                                <td><span t-field="o.final_dest"/> </td>
+                            </tr>
+                            <tr style="font-size:11px;">
+                                <td><strong>Marks &amp; No.s/Container No.:</strong><br/><span t-field="o.container_no"/><br/><span t-field="o.container_no1"/><br/><span t-field="o.container_no2"/></td>
+                                <td><center><strong>No. &amp; Kind of Pkgs.</strong></center><br/><center><span t-field="o.kind_pkg"/></center></td>
+                                <td colspan='2'><strong>Commodity and Other Description</strong><br/><span t-field="o.commodity_desc"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>S.No.</th>
+                        <th>Description</th>
+                        <th class="hidden">Source Document</th>
+                        <th class="text-right">Quantity</th>
+                        <th class="text-right">Unit</th>
+                        <th class="text-right">Unit Price</th>
+                        <th t-if="display_discount" class="text-right" groups="sale.group_discount_per_so_line">Disc.(%)</th>
+                        <!-- <th class="text-right">Taxes</th> -->
+                        <th class="text-right">Total Amount</th>
+                    </tr>
+                </thead>
+                <tbody class="invoice_tbody">
+                    <t t-set="sequence" t-value="1"/>
+                    <tr t-foreach="o.invoice_line_ids" t-as="l">
+                        <td><span t-esc="sequence"/></td><t t-set="sequence" t-value="sequence+1"/>
+                        <td><span t-field="l.name"/></td>
+                        <td class="hidden"><span t-field="l.origin"/></td>
+                        <td class="text-right"><span t-field="l.quantity"/></td>
+                        <td class="text-right"><span t-field="l.uom_id" /></td>
+                        <td class="text-right">
+                            <span t-field="l.price_unit"/>
+                        </td>
+                        <td t-if="display_discount" class="text-right" groups="sale.group_discount_per_so_line">
+                            <span t-field="l.discount"/>
+                        </td>
+                        <!-- <td class="text-right">
+                            <span t-esc="', '.join(map(lambda x: (x.description or x.name), l.invoice_line_tax_ids))"/>
+                        </td> -->
+                        <td class="text-right">
+                            <span t-field="l.price_subtotal" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                        </td>
+                    </tr>
+					<tr style="border-top-style:none !important;"><td style="border-top-style:none !important;" colspan="6"/></tr>
+					<tr style="border-top-style:none !important;"><td style="border-top-style:none !important;" colspan="6"/></tr>
+					<tr>
+                        <td colspan="2">Total Invoice Amount In Words(<t t-esc="o.currency_id.name"/>):<br/><span t-esc="o.amount_to_text(o.amount_total, o.currency_id)"/></td>
+						<td class="text-right"><t t-esc="int(sum(l.quantity for l in o.invoice_line_ids))"/></td>
+						<td class="text-right"><span t-field="o.invoice_line_ids[0].uom_id"/></td>
+						<td class="text-right"><t t-esc="o.currency_id.name"/></td>
+						<td class="text-right"><span t-field="o.amount_untaxed" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/></td>
+					</tr>
+					<tr>
+                        <td style="border:0px"></td>
+                        <td style="border:0px"></td>
+                        <td colspan="3" class="text-center"><strong>Total <t t-esc="o.currency_id.name"/>, <t t-esc="get_order(o)[0]['delivery_term']"/></strong></td>
+						<td class="text-right"><span t-field="o.amount_untaxed" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/></td>
+					</tr>
+                </tbody>
+            </table>
+
+			<!--<t t-set="quantity_total" t-value="sum([l.quantity for l in o.invoice_line_ids])"/>
+            
+            <div class="row">
+                    <table class="table table-condensed ">
+                            <tr colspan='4'><td rowspan='4'><strong>Total(In Words):</strong><br/>	<span t-esc="o.amount_to_text(o.amount_total, o.currency_id)"/></td></tr>
+                            <tr><td class="text-right"><strong>Subtotal:</strong></td>
+                                <td><span t-field="o.amount_untaxed" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                            </td>
+                            </tr>
+                            <tr>
+                        <t t-foreach="o._get_tax_amount_by_group()" t-as="amount_by_group">
+                                <td><span t-esc="amount_by_group[0]"/></td>
+                                <td class="text-right">
+                                    <span t-esc="amount_by_group[1]"/>
+                                </td>
+                        </t></tr>
+                            <tr><td class="text-right"><strong>Total:</strong></td><td><span t-field="o.amount_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+                            </td></tr>
+                    </table>
+            </div>-->
+                    <div style="float:left;">
+                        <span><strong>IEC No.: </strong><span t-field="o.iec_no"/></span><br/>
+                        <span><strong>Total Gross Weight: </strong><span t-field="o.total_grwt"/></span><br/>
+                        <span><strong>Total NET Weight: </strong><span t-field="o.total_ntwt"/></span><br/>
+                    </div>
+                    <!--<div class="col-xl-5" style="margin-left:500px;"><br/>
+                        <p>For <span t-field="o.company_id.name"/></p><br/>
+                        <span>Authorised Signatory</span>
+                    </div>-->
+                    
+                </div>
+                <div class="footer">
+                      <div class="text-right">       
+                      	<div class="col-xl-5">
+                        	<p>For <span t-field="o.company_id.name"/></p><br/>
+                        	<span>Authorised Signatory</span>
+                    	</div><br/><br/>
+	                    <ul class="list-inline">
+	                        <li>Page:</li>
+	                        <li><span class="page"/></li>
+	                        <li>/</li>
+	                        <li><span class="topage"/></li>
+	                    </ul>
+	                </div>
+	            </div>
+            </t>
+        </t>
+    <!--</t>-->
+    </template>
+</odoo>

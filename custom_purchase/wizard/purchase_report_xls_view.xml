@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="purchase_report_xls_wizard" model="ir.ui.view">
+            <field name="name">purchase.report.xls</field>
+            <field name="model">purchase.report.xls</field>
+            <field name="arch" type="xml">
+                <form string="Excel Report">
+                    <field name="state" invisible="1"/>
+                    <div states="get">
+                         <group>
+                          	<field name="p_o_data" colspan="4"/>
+                            <field name="file_name" filename="p_o_data" colspan="4"/>
+                        </group>
+                    </div>
+                    <div states="choose">
+                        <group>
+                            <group>
+                                <field name="start_date" />
+                                <field name="state_selec" />
+                            </group>
+                            <group>
+                                <field name="end_date"/>
+                            </group>
+                        </group>                                
+                    </div>
+                    <footer states="choose">
+                        <button string="Generate Report With Products" 
+                            class="btn-primary" 
+                            name="get_purchase_report"
+                            type="object"/>
+                            or
+                            <button string="Generate Report" 
+                            class="btn-primary" 
+                            name="get_purchase_amount"
+                            type="object"/>
+                        <button string="Cancel" 
+                            class="btn-default" 
+                            special="cancel" />
+                    </footer>
+                    <footer states="get">
+                        <button special="cancel" string="Cancel" class="oe_highlight" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_purchase_report_xls" model="ir.actions.act_window">
+            <field name="name">Purchase Order Reports</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.report.xls</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="purchase_report_xls_wizard"/>
+            <field name="target">new</field>
+        </record>
+
+         <menuitem name="Purchase Order Reports" id="purchase_report_xls_menu"
+              parent="purchase.menu_purchase_root" sequence="7" action="action_view_purchase_report_xls"/>
+</odoo>

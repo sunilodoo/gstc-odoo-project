@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <!-- Sequences for Packing List -->
+        <record id="sequence_packing_list" model="ir.sequence">
+            <field name="name">Packing List</field>
+            <field name="code">packing.list</field>
+            <field name="prefix">PL/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">4</field>
+        </record>
+
+		<!-- Sequences for Export invoice -->
+        <record id="sequence_export_invoice" model="ir.sequence">
+            <field name="name">Export Invoice</field>
+            <field name="code">export.invoice</field>
+            <field name="prefix">EI/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">4</field>
+        </record>
+
+    </data>
+</openerp>

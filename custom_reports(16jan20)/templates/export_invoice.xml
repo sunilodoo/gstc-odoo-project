@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="export_invoice"  >
+        <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+            <!--<t t-call="report.external_layout">-->
+                <div class="page">
+                    <table class="table table-condensed table-bordered">
+                        <thead>
+                        <th class="text-center" colspan="4">
+							EXPORT INVOICE<br/>
+							“SUPPLY MEANT FOR EXPORT UNDER LUT WITHOUTH PAYMENT OF IGST”
+						</th>
+                        </thead>
+                        <tbody>
+                            <tr >
+                                <td  colspan="4">
+                                    <t t-if="o.company_id">
+										<div class="col-xs-2" style="float:left;vertical-align: middle;text-align: center;margin: auto;">
+											<img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo" style="max-height: 45px;"/>
+										</div>
+										<div class="col-xs-8" style="float:left">
+		                                    <p class="text-center" >
+												<strong><t t-esc="o.company_id.name"/></strong>
+											</p>
+											<p class="text-center" >
+												<t t-esc="o.company_id.street"/> 
+												<t t-esc="o.company_id.city"/>- 
+												<t t-esc="o.company_id.zip"/>, 
+												<t t-esc="o.company_id.country_id.name"/>
+											</p>
+											<p class="text-center" >
+												TEL: <t t-esc="o.company_id.phone"/>, 
+												FAX: <t t-esc="o.company_id.fax"/>, 
+												Email: <t t-esc="o.company_id.email"/>, 
+												Website: <t t-esc="o.company_id.website"/>
+											</p>
+		                                    <p class="text-center" t-if="o.company_id.vat">
+												<strong>CIN: </strong><span t-field="o.company_id.vat"/>
+											</p>
+											<p class="text-center" t-if="o.company_id.gstn">
+												<strong>GSTIN: </strong><span t-field="o.company_id.gstn"/>
+											</p>
+										</div>
+
+		                            		</t>
+		                            </td>
+							</tr>
+							<tr>
+		                             <td padding="0px" colspan="2">
+                                    <table class="table table-condensed" style="cell-padding:0px;">
+                                        <tr style="border-top-style:none !important;">
+                                            <td style="border-top-style:none !important;"><strong>Invoice No.:</strong></td>
+                                            <td colspan='2' style="border-top-style:none !important;"><span t-field="o.inv_no"/> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Invoice Date:</strong></td>
+                                            <td colspan='2'><span t-field="o.date_invoice"/> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Reverse Charge (Y/N):</strong></td>
+                                            <td colspan='2'><span t-field="o.reverse_charge"/> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>State: </strong></td>
+                                            <td><span t-field="o.company_id.state_id.name"/> </td>
+											<td><strong>Code: <span t-field="o.company_id.state_id.code"/></strong></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td colspan='2'></td>
+                                        </tr>
+                                    </table>
+		                            </td>
+									<td padding="0px" colspan="2">
+                                    <table class="table table-condensed" style="cell-padding:0px;">
+                                        <tr style="border-top-style:none !important;">
+                                            <td style="border-top-style:none !important;"><strong>Transport Mode:</strong></td>
+                                            <td colspan='2' style="border-top-style:none !important;"><span t-field="o.transport_mode"/> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Vehicle Number:</strong></td>
+                                            <td colspan='2'><span t-field="o.vehicle_no"/> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Date and Time of Supply:</strong></td>
+                                            <td colspan='2'><span t-field="o.datetime_supply"/> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Place of Supply:</strong></td>
+                                            <td colspan='2'><span t-field="o.supply_place"/> </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Payment Terms:</strong></td>
+                                            <td colspan='2'><t t-esc="o.payment_term_id.name"/> </td>
+                                        </tr>
+                                    </table>
+		                            </td>
+                            </tr>
+							<tr>
+								<th colspan="2" class="text-center">Details of Receiver / Bill to</th>
+								<th colspan="2" class="text-center">Details of Consignee / Ship to</th>
+							</tr>
+                            <tr>
+                                <td  colspan="2">
+                                    <t t-if="o.is_consignee and o.consignee and (o.partner_id != o.consignee)">
+		                                <strong>Consignee:</strong>
+                                        <address t-field="o.consignee" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;,&quot;phone&quot;,&quot;mobile&quot;,&quot;fax&quot;,&quot;email&quot;], &quot;no_marker&quot;: True}"/>
+                                        <span t-if="o.consignee.vat">TIN: <span t-field="o.partner_id.vat"/></span>
+		                            </t>
+									<t t-if="not o.is_consignee">
+                                        <strong>Consignee:</strong>
+                                        <address t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;,&quot;phone&quot;,&quot;mobile&quot;,&quot;fax&quot;,&quot;email&quot;], &quot;no_marker&quot;: True}"/>
+                                        <span t-if="o.partner_id.vat">TIN: <span t-field="o.partner_id.vat"/></span>
+		                            </t>
+									<t t-if="(o.partner_id == o.consignee) and o.is_consignee and o.consignee">
+                                        <strong>Consignee:</strong>
+                                        <address t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;,&quot;phone&quot;,&quot;mobile&quot;,&quot;fax&quot;,&quot;email&quot;], &quot;no_marker&quot;: True}"/>
+                                        <span t-if="o.partner_id.vat">TIN: <span t-field="o.partner_id.vat"/></span>
+		                            </t>
+		                            </td> 
+		                            <td  colspan="2">
+                                    <t t-if="(o.is_consignee) and o.partner_id != o.consignee">
+                                        <strong>Buyer(if other than consignee):</strong>
+                                        <address t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;,&quot;phone&quot;,&quot;mobile&quot;,&quot;fax&quot;,&quot;email&quot;], &quot;no_marker&quot;: True}"/>
+                                        <span t-if="o.partner_id.vat">TIN: <span t-field="o.partner_id.vat"/></span>
+		                            </t>
+		                            </td>
+                            </tr>
+                            <tr>
+								<th colspan="2" class="text-center">Export Under LUT No. <t t-esc="o.lut_no.name"/></th>
+								<th colspan="2" class="text-center">E-WAY BILL <t t-esc="o.eway_bill"/></th>
+							</tr>
+                            <tr>
+                                <td colspan='4'></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-bordered" style="margin-top:20px;">
+				        <thead>
+				            <tr>
+				                <th rowspan="2">S.No.</th>
+				                <th rowspan="2">Product Description</th>
+				                <th rowspan="2" class="text-center">HSN Code</th>
+				                <th rowspan="2" class="text-right">Qty</th>
+				                <th rowspan="2" class="text-right">UoM</th>
+				                <th rowspan="2" class="text-right">Rate</th>
+				                <th rowspan="2" class="text-right">Amount</th>
+				                <th rowspan="2" class="text-right">Discount</th>
+				                <th rowspan="2" class="text-right">Taxable Value</th>
+				                <th colspan="2" class="text-center">CGST</th>
+								<th colspan="2" class="text-center">SGST</th>
+								<th colspan="2" class="text-center">IGST</th>
+				                <th rowspan="2" class="text-right">Total</th>
+				            </tr>
+							<tr>
+								<th>Rate %</th>
+								<th >Rs.</th>
+								<th>Rate %</th>
+								<th >Rs.</th>
+								<th>Rate %</th>
+								<th >Rs.</th>
+							</tr>
+				        </thead>
+				        <tbody class="invoice_tbody">
+				            <t t-set="sequence" t-value="0"/>
+				            <t t-set="a" t-value="0"/>
+				            <t t-set="b" t-value="0"/>
+				            <t t-set="c" t-value="0"/>
+				            <t t-set="d" t-value="0"/>
+				            <t t-set="e" t-value="0"/>
+				            <t t-set="f" t-value="0"/>
+				            <t t-set="g" t-value="0"/>
+				            <tr t-foreach="o.export_line_ids" t-as="l" style="page-break-inside: avoid;">
+				                <td><span t-esc="sequence"/></td><t t-set="sequence" t-value="sequence+1"/>
+				                <td><span t-field="l.name"/></td>
+				                <td><span t-field="l.hsn.name"/></td>
+				                <td class="text-right"><t t-set="a" t-value="a + l.quantity"/><span t-field="l.quantity"/></td>
+				                <td class="text-right"><span t-field="l.uom_id" /></td>
+				                <td class="text-right">
+				                    <span t-field="l.price_unit"/>
+				                </td>
+								<td class="text-right">
+				                    <t t-set="b" t-value="b + l.price_subtotal"/><span t-field="l.price_subtotal"/>
+				                </td>
+				                <td class="text-right" >
+				                    <t t-set="c" t-value="c + l.discount"/><t t-esc="l.discount"/>
+				                </td>
+				                <td class="text-right">
+										<t t-set="d" t-value="d + l.tax_id.amount"/>
+										<t t-set="e" t-value="e + (l.price_subtotal)"/><t t-esc="l.price_subtotal - l.discount"/>
+				                </td>
+								<td class="text-right">
+				                    0%
+				                </td>
+								<td class="text-right">
+				                    0.00
+				                </td>
+								<td class="text-right">
+				                    0%
+				                </td>
+								<td class="text-right">
+				                    0.00
+				                </td>
+								<td class="text-right">
+				                    <t t-esc="l.tax_id.amount"/>
+				                </td>
+								<td class="text-right">
+				                    <t t-set="f" t-value="f + (l.price_subtotal * l.tax_id.amount)/100"/>0.00
+				                </td>
+				                <td class="text-right">
+				                    <t t-set="g" t-value="g + l.price_subtotal"/><span t-field="l.price_subtotal" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
+				                </td>
+				            </tr>
+							<tr>
+								<td colspan="3">Total</td>
+								<td class="text-right">
+				                    <t t-esc="a"/>
+				                </td>
+								<td class="text-right">
+				                    
+				                </td>
+								<td class="text-right">
+				                    
+				                </td>
+								<td class="text-right">
+				                	<t t-esc="b"/> 
+				                </td>
+								<td class="text-right">
+				                	<t t-esc="c"/> 
+				                </td>
+								<td class="text-right">
+				                	<t t-esc="e"/> 
+				                </td>
+								<td class="text-right">
+				                	
+				                </td>
+								<td class="text-right">
+				                	0.00
+				                </td>
+								<td class="text-right">
+				                	
+				                </td>
+								<td class="text-right">
+				                	0.00
+				                </td>
+								<td class="text-right">
+				                	
+				                </td>
+								<td class="text-right">
+				                	<t t-esc="f"/> 
+				                </td>
+								<td class="text-right">
+				                	<t t-esc="g"/> 
+				                </td>
+							</tr>
+							<tr>
+								<td rowspan="4" colspan="8" >
+									<table class="table table-bordered mt16" style="border: none;">
+											<tr style="border: none;">
+												<th style="border: none;">Remarks-</th>
+												<!--<th style="border: none;" colspan="7"><t t-esc="o.remarks"/></th>-->
+											</tr>
+											<tr style="border: none;">
+												<th style="border: none;" colspan="2">S.B No. &amp; Date</th>
+												<td style="border: none;" colspan="2" class="text-right"><t t-esc="o.sb_no"/> <t t-esc="o.sb_date"/></td>
+												<th style="border: none;" colspan="2" class="text-left">Total Cartons:</th>
+												<td style="border: none;" colspan="2" class="text-right"><t t-esc="o.total_cartons"/></td>
+											</tr>
+											<tr style="border: none;">
+												<th style="border: none;" colspan="2">Exchange Rate Rs.</th>
+												<td style="border: none;" colspan="2" class="text-right"><t t-esc="o.conversion_rate"/></td>
+												<th style="border: none;" colspan="2" class="text-left">Gross Wt:</th>
+												<td style="border: none;" colspan="2" class="text-right"><t t-esc="o.total_grwt"/></td>
+											</tr>
+									</table>
+								</td>
+								<td colspan="7">Total Amount before Tax:</td>
+								<td class="text-right"><t t-esc="o.amount_untaxed"/></td>
+							</tr>
+							<tr>
+								<td colspan="7">Add: Total GST:</td>
+								<!--<td class="text-right"><t t-esc="f"/></td>-->
+								<td class="text-right"><t t-esc="0.00"/></td>
+							</tr>
+							<tr>
+								<td colspan="7">Total Amount after Tax:</td>
+								<td class="text-right"><t t-esc="o.amount_untaxed"/></td>
+							</tr>
+							<tr>
+								<td colspan="7">Freight:</td>
+								<td class="text-right"><t t-esc="o.freight_charge"/></td>
+							</tr>
+							<tr>
+				                <td rowspan="4" colspan="8">Total Invoice Amount In Words(<t t-esc="o.currency_id.name"/>):<br/><span t-esc="str(o.amount_to_text(round(o.amount_untaxed))).capitalize() + ' Rupees Only'"/></td>
+							</tr>
+							<tr>
+								<td colspan="7">Insurance:</td>
+								<td class="text-right"><t t-esc="o.freight_charge"/></td>
+							</tr>
+							<tr>
+								<td colspan="7">Packing Charges:</td>
+								<td class="text-right"><t t-esc="o.ext_charge"/></td>
+							</tr>
+							<tr>
+								<td colspan="7">Total Invoice Value:</td>
+								<td class="text-right"><t t-esc="o.grand_total"/></td>
+							</tr>
+							<tr>
+								<td style="border: none;" rowspan="5" colspan="8">
+										<p><strong><u>Declaration:</u></strong></p>
+										<p>The particulars given are true and correct.</p>
+										<p><t t-tesc="o.declaration"/></p>
+								</td>
+								<td style="border: none;" rowspan="5" colspan="8">
+									<div class="col-md-6" style="float:right;">
+										<strong><p>For <span t-field="o.company_id.name"/></p></strong><br/>
+		                    			<span>Authorised Signatory</span>
+									</div>
+								</td>
+							</tr> 
+				        </tbody>
+		        </table>
+                </div>
+            </t>
+        </t>
+    <!--</t>-->
+    </template>
+</odoo>

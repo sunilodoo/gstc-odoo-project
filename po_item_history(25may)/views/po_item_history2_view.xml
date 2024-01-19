@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+
+     <record id="PO_item_history2_form_view" model="ir.ui.view">
+		<field name="name">po_item.history2.form</field>
+		<field name="model">po_item.history2</field>
+		<field name="arch" type="xml">
+			<form string="Order Summary SO" >
+				<sheet>
+				<group>
+					<group>
+						<field name='product_id'/>
+						<label for="product_uom_qty" string="Quantity"/>
+                        <div>
+                            <field name="product_uom_qty" class="oe_inline" digits="(14, 0)"/>
+                            <field name="product_uom" />
+                        </div>
+						<field name='unit_price'/>
+						<field name='price_subtotal'/>
+						<field name='pf_chrg'/>
+						<field name='status' />
+					</group>
+					<group>
+						<field name='name'/>
+						<field name='vendor'/>
+						<field name='proc_name'/>
+						<field name='so_id'/>
+						<field name='so_date'/>
+						<field name='po_id'/>
+						<field name='so_priority'/>
+						<field name='priority'/>
+						<field name='po_place_date'/>
+						<field name='inv_date'/>
+						<field name='is_problem'/>
+					</group>
+				</group>
+				<group>
+					<group>
+						<field name='dlvy_confm_date'/>
+                        <field name="oe_dlvy_req_date"/>
+                        <field name="act_dlvy_date" />
+					</group>
+					<group>
+						<field name='dlvy_req_date'/>
+						<field name='cur_dlvy_date'/>
+						<field name='pack_docs_day'/>
+						<field name='days_dispatch'/>
+					</group>
+				</group>
+
+				<group>
+					<group>
+						<field name='days_to_place'/>
+                        <field name="behind_ahead"/>
+                        <!--<field name="d_to_d"/>-->
+					</group>
+				</group>				
+
+				<group>
+					<group>
+						<field name='bill_no'/>
+                        <field name="bill_date"/>
+					</group>
+					<group>
+						<field name='sob_date'/>
+						<field name='doc_bank_date'/>
+					</group>
+				</group>
+				
+				<notebook>
+					<page string="Extra Information">
+						<group>
+							<group>
+								<field name='os_qty'/>
+								<field name='goods_rcvd_qty'/>
+								<field name='goods_insp_qty'/>
+							</group>
+							<group>
+								<field name='goods_packed'/>
+								<field name='avl_qty'/>
+							</group>
+						</group>
+					</page>
+					<page string="Remarks">
+						<group>
+							<group>
+								<field name='remarks'/>
+							</group>
+						</group>
+					</page>
+					<page string="Problems" attrs="{'invisible':[('is_problem', '!=', True)]}">
+						<group>
+							<group>
+								<field name='problem'/>
+							</group>
+						</group>
+					</page>
+				</notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="PO_item_history2_tree_view" model="ir.ui.view">
+			<field name="name">po_item.history2.tree</field>
+			<field name="model">po_item.history2</field>
+			<field name="arch" type="xml">
+				<tree string="Order Summary SO" colors="red:is_problem!=False;green:state=='draft' " class='custom_size'>
+					<field name='is_problem' />
+					<field name='state' invisible='1'/>
+					<field name='product_id' />
+					<field name='so_priority'/>
+					<field name='priority'/>
+					<field name='vendor'/>
+					<field name='proc_name'/>
+					<field name='days_dispatch' />
+					<field name='product_uom_qty' digits="(14, 0)"/>
+					<field name='product_uom' />
+					<field name='unit_price' />
+					<field name='price_subtotal' sum="Amount"/>
+					<field name='pf_chrg' sum="P&amp;F Charges"/>
+					<field name='so_id'/>
+					<field name='po_id'/>
+					<field name='po_place_date'/>
+					<field name='so_date'/>
+					<field name='days_to_place'/>
+					<field name='behind_ahead'/>
+					<!--<field name='d_to_d'/>-->
+					<field name='dlvy_confm_date' />
+					<field name='dlvy_req_date' />
+
+					<field name='oe_dlvy_req_date' />
+					<field name='cur_dlvy_date' />
+					<field name='act_dlvy_date' />
+					<field name='pack_docs_day' />
+					<field name='problem' />
+					<field name='inv_date' />
+					<field name='bill_no' />
+
+					<field name='bill_date' />
+					<field name='sob_date' />
+					<field name='doc_bank_date' />
+					<field name='status' />
+					
+					
+				</tree>
+			</field>
+	</record>
+	
+	<record id="custom_filter_POitem_history2" model="ir.ui.view">
+            <field name="name">po_item.history2.filter</field>
+            <field name="model">po_item.history2</field>
+            <field name="arch" type="xml">
+				 <search string="po_item.history2">
+		            <field name="name" string="Item" filter_domain="[('name','ilike',self)]"/>
+					<field name="vendor" string="Buyer"/>
+					<field name="bill_no" string="Bill Number" filter_domain="[('bill_no','ilike',self)]"/>
+					<group expand="1" string="Group By">
+		                <filter string="Item" context="{'group_by':'product_id'}"/>
+						<filter string="Vendor" context="{'group_by':'vendor'}"/>
+						<filter string="SO" context="{'group_by':'so_id'}"/>
+						<filter string="PO" context="{'group_by':'po_id'}"/>
+						<filter string="Problem" context="{'group_by':'is_problem'}"/>
+		            </group>
+				</search>
+            </field>
+        </record>
+
+	<!-- ####### Payment Status ######## 
+	<record id="payment_status_form_view" model="ir.ui.view">
+		<field name="name">payment.status.form</field>
+		<field name="model">payment.status</field>
+		<field name="arch" type="xml">
+			<form string="Payment Status" >
+				<sheet><group><group>
+				<field name='name'/>
+				</group></group></sheet>
+			</form>
+		</field>
+	</record>
+	<record id="payment_status_tree_view" model="ir.ui.view">
+		<field name="name">payment.status.tree</field>
+		<field name="model">payment.status</field>
+		<field name="arch" type="xml">
+			<tree string="Payment Status" >
+				<field name='name'/>
+			</tree>
+		</field>
+	</record>
+
+	
+	<record model="ir.actions.act_window" id="action_payment_status_form">
+		 <field name="name">Payment Status</field>
+		 <field name="res_model">payment.status</field>
+		 <field name="view_mode">tree,form</field>
+	</record>-->
+
+	<record model="ir.actions.act_window" id="action_POitem_history2_form">
+		 <field name="name">SO Summary All</field>
+		 <field name="res_model">po_item.history2</field>
+		 <field name="view_mode">tree,form</field>
+	</record>
+
+        <!--<menuitem name="Order Summary PO"
+            id="submenu_POitem_history2"
+            parent="menu_POitem_history"
+            sequence="2"/>-->
+		<menuitem name="SO Summary All" id="menu_POitem2" parent="submenu_POitem_history"
+		            sequence="1" action="action_POitem_history2_form"/>
+
+		<!--<menuitem name="Payment Status" id="menu_payment_state" parent="submenu_POmis_reporting" groups="base.group_erp_manager"
+		            sequence="2" action="action_payment_status_form"/>-->
+
+  </data>
+</odoo>

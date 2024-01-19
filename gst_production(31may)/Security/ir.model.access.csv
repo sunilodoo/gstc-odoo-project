@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_freight_to,access_freight_to,model_freight_to,base.group_user,1,1,1,1
+access_incoterm_trade,incoterm.trade,model_incoterm_trade,base.group_user,1,1,1,1
+access_delivered_time,delivered.time,model_delivered_time,base.group_user,1,1,1,1

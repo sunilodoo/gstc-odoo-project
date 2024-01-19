@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_history,sale.history,model_sale_history,base.group_user,1,1,1,1
+access_customer_classify,customer.classify,model_customer_classify,base.group_user,1,1,1,1
+access_company_profile,company.profile,model_company_profile,base.group_user,1,1,1,1
+access_product_interest,product.interest,model_product_interest,base.group_user,1,1,1,1
+access_competitive_analysis,competitive.analysis,model_competitive_analysis,base.group_user,1,1,1,1
+user_art_work,art.work,model_art_work,base.group_user,1,1,1,0
+manager_art_work,art.work,model_art_work,base.group_erp_manager,1,1,1,1
+user_art_work_brand,art.work.brand,model_art_work_brand,base.group_user,1,1,0,0
+manager_art_work_brand,art.work.brand,model_art_work_brand,base.group_erp_manager,1,1,1,1

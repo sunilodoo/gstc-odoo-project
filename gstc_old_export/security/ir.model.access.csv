@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_old_export,old.export,model_old_export,base.group_user,1,1,1,0
+access_shipping_line_charges,shipping.line.charges,model_shipping_line_charges,base.group_user,1,1,1,0
+access_shipping_panel,shipping.panel,model_shipping_panel,base.group_user,1,1,1,0
+access_shipping_panel_line,shipping.panel.line,model_shipping_panel_line,base.group_user,1,1,1,0
+access_procurement_panel,procurement.panel,model_procurement_panel,base.group_user,1,1,1,1
+access_procurement_panel_line,procurement.panel.line,model_procurement_panel_line,base.group_user,1,1,1,1

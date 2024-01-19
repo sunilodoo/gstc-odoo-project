@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data> 
+		<!-- Packing List -->
+     <record id="gstc_export_invoice_form_view" model="ir.ui.view">
+        <field name="name">export.invoice.form</field>
+        <field name="model">export.invoice</field>
+        <field name="arch" type="xml">
+			<form string="Export Invoice" >
+				<sheet>
+				<group>
+					<group>
+						<field name="partner_id"/>
+						<field name='is_consignee'/>
+						<field name='consignee' attrs="{'invisible': [('is_consignee', '=', False)]}"/>
+						<!--field name='hide_dispatch' invisible='1'/-->
+						<field name='payment_term_id'/>
+						<field name='conversion_rate'/>
+					</group>
+					<group>
+						<field name='inv_no'/>
+						<field name='date_invoice'/>
+						<field name='currency_id'/>
+					</group>
+				</group>
+				<group>
+					<group>
+						<field name="lut_no"/>
+					</group>
+					<group>
+						<field name='eway_bill'/>
+					</group>
+				</group>
+			<notebook>
+				<page string="Export Lines" >
+					<field name="export_line_ids"/>
+					<group class="oe_subtotal_footer oe_right">
+						<field name="amount_untaxed"/>
+						<field name="freight_charge"/>
+						<field name="freight_only"/>
+						<field name="insur_charge"/>
+						<field name="bank_charge"/>
+						<field name="ext_charge"/>
+						<field name="global_disc"/>
+						<field name="grand_total"/>
+					</group>
+				</page>
+				<page string="Other Info" >
+					<group>
+					<group>
+						<field name="origin"/>
+						<field name="inv_id"/>
+						<field name="packing_invoice_id"/>
+					</group>
+					<group>
+						<field name="company_id"/>
+					</group>
+					</group>
+				</page>
+				<page string="Reporting Info" >
+					<group>
+					<group>
+						<field name="name" readonly='1'/>
+						<field name="reverse_charge"/>
+						<field name="supply_place"/>
+						<field name="datetime_supply"/>
+						<field name="sb_no"/>
+						<field name="sb_date" />
+						<field name="total_grwt"/>
+						<field name="total_cartons"/>
+					</group>
+					<group>
+						<field name="transport_mode"/>
+						<field name="vehicle_no"/>
+						<field name="remarks"/>
+						<field name="declaration"/>
+					</group>
+					</group>
+				</page>
+        	</notebook>
+			</sheet>
+			</form>
+        </field>
+    </record>
+
+	<record id="gstc_export_invoice_tree_view" model="ir.ui.view">
+		<field name="name">export.invoice.tree</field>
+		<field name="model">export.invoice</field>
+		<field name="arch" type="xml">
+			<tree string="Export List" class='custom_size'>
+				<field name="name"/>
+				<field name="partner_id"/>
+				<field name="supply_place"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="gstc_export_line_tree_view" model="ir.ui.view">
+		<field name="name">export.line.tree</field>
+		<field name="model">export.line</field>
+		<field name="arch" type="xml">
+			<tree string="Export Lines" editable="bottom">
+				<field name="product_id" groups="base.group_erp_manager"/>
+				<field name="name"/>
+				<field name="hsn"/>
+				<field name="order_qty" readonly="1"/>
+				<field name="quantity"/>
+				<field name="uom_id"/>
+				<field name="price_unit1" invisible="1"/>
+				<field name="price_unit"/>
+				<field name="discount"/>
+				<field name="tax_id" widget="many2many_tags"/>
+				<field name="price_subtotal"/>
+			</tree>
+		</field>
+	</record>
+	
+	<record model="ir.actions.act_window" id="action_gstc_export_invoice_form">
+		 <field name="name">Export Invoice</field>
+		 <field name="res_model">export.invoice</field>
+		 <field name="view_mode">tree,form</field>
+	</record>
+	<menuitem id="menu_gstc_export_invoice" action="action_gstc_export_invoice_form" parent="account.menu_finance_receivables" sequence="13"/>
+
+    </data>
+</openerp>

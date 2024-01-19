@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+	<!-- Project Task Inherit -->
+     <record id="custom_lead_view" model="ir.ui.view">
+        <field name="name">crm.lead.form</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+        <field name="arch" type="xml">
+			<field name="partner_id" position="after">
+				<field name="cust_type" />
+			</field>
+			<field name="campaign_id" position="replace">
+				<field name="old_customer" />
+			</field>
+			<field name="medium_id" position="replace">
+				<field name="compt_customer" />
+			</field>
+			<field name="source_id" position="replace">
+				<field name="new_customer" />
+			</field>
+			<field name="team_id" position="after">
+				<field name="campaign_id" string="Leads"/>
+				<field name="medium_id" />
+				<field name="source_id" />
+			</field>
+			<field name="tag_ids" position="after">
+				<field name="day_open" groups="base.group_no_one"/>
+				<field name="day_close" groups="base.group_no_one"/>
+				<field name="referred" string="Potential value"/>
+				<field name="type" invisible="1"/>
+			</field>
+			<xpath expr="//group[@name='Misc']" position="replace">
+        	</xpath>
+			<xpath expr="//page[2]" position="after">
+				<page string="Image" >
+					<field name="lead_image" mode="kanban" context="{'default_name': name}"/>
+					 <kanban>
+                    <!--list of field to be loaded -->
+                    <templates>
+                    <t t-name="kanban-box">
+                            <div class="oe_product_vignette">
+                                <a type="open">
+                                    <img class="oe_kanban_image"
+                                        t-att-src="kanban_image('lead.image', 'image', record.id.value)" />
+                                </a>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+				</page>
+        	</xpath>
+			<xpath expr="//page[3]" position="after">
+				<page string="Remarks" >
+					<group>
+					<group>
+						<field name="remarks"/>
+					</group>
+					</group>
+				</page>
+        	</xpath>
+        </field>
+    </record>
+
+	<record id="additional_crm_lead_tree_view" model="ir.ui.view">
+        <field name="name">crm.lead.tree</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+			<xpath expr="//tree/field[@name='user_id']" position="replace">
+                </xpath>
+			<field name="create_date" position="after">
+				<field name="user_id"/>
+			</field>
+			<field name="country_id" position="after">
+				<field name="date_deadline"/>
+			</field>
+        </field>
+    </record>
+
+	<record id="custom_child_lead_view" model="ir.ui.view">
+        <field name="name">lead.image.form</field>
+        <field name="model">lead.image</field>
+        <field name="arch" type="xml">
+			<form string="Image" >
+				<sheet>
+				<group>
+					<group>
+						<field name='name'/>
+						<field name='image'/>
+						<field name='l_id' invisible='1'/>
+					</group>
+				</group>
+				</sheet>
+			</form>
+        </field>
+    </record>
+
+	<record id="custom_child_lead_tree_view" model="ir.ui.view">
+		<field name="name">lead.image.tree</field>
+		<field name="model">lead.image</field>
+		<field name="arch" type="xml">
+			<tree string="Image" >
+				<field name='name'/>
+				<field name='image'/>
+			</tree>
+		</field>
+	</record>
+
+
+	<record id="mis_child_lead_kanban_view" model="ir.ui.view">
+		<field name="name">lead.image.kanban</field>
+		<field name="model">lead.image</field>
+		<field name="arch" type="xml">
+			<kanban>
+			<!--list of field to be loaded -->
+			<field name="name" />
+			<field name="image" />
+			<templates>
+				<t t-name="kanban-box">
+					<div class="oe_product_vignette">
+						<a type="open">
+							<img class="oe_kanban_image"
+								t-att-src="kanban_image('lead.image', 'image', record.id.value)" />
+						</a>
+						<div class="oe_product_desc">
+							<a t-if="!read_only_mode" type="delete" class="fa fa-times pull-right"/>
+						</div>
+					</div>
+				</t>
+			</templates>
+			</kanban>
+		</field>
+	</record>
+
+	<record id="action_child_lead_form" model="ir.actions.act_window">
+        <field name="name">Image</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">lead.image</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+  	</record>
+
+  </data>
+</odoo>

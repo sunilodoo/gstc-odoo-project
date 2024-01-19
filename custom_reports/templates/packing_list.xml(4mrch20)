@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="packing_list" >
+        <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+            <!--<t t-call="report.external_layout">-->
+                    <div class="header">
+					<style>
+						.table, tr, td, th{
+							border: 1px solid black !important
+						}
+					</style>
+                    <table class="table">
+                        <thead>
+                        <th class="text-center" colspan="4">PACKING LIST</th>
+                        </thead>
+                        <tbody>
+                            <tr style="font-size:9px;text-transform: uppercase;">
+                                 <td colspan="2" rowspan="7" style="text-transform: uppercase;width:500px;">
+                                    <t t-if="o.company_id">
+                                        <strong>Exporter:</strong><br/>
+                                        <!--<address t-field="o.company_id.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;,&quot;phone&quot;,&quot;mobile&quot;,&quot;fax&quot;,&quot;email&quot;], &quot;no_marker&quot;: True}"/>-->
+										<span t-field="o.company_id.partner_id.name"/><br/>
+										<t t-if="o.company_id.partner_id.street"><span t-field="o.company_id.partner_id.street"/><br/></t>
+										<t t-if="o.company_id.partner_id.street2"><span t-field="o.company_id.partner_id.street2"/><br/></t>
+										<t t-if="o.company_id.partner_id.city"><span t-field="o.company_id.partner_id.city"/></t>
+										<t t-if="o.company_id.partner_id.zip"><span t-field="o.company_id.partner_id.zip"/></t>
+										<t t-if="o.company_id.partner_id.country_id"><span t-field="o.company_id.partner_id.country_id.name"/><br/></t>
+										<t t-if="o.company_id.partner_id.email"><strong>Email:</strong><span t-field="o.company_id.partner_id.email"/><br/></t>
+										<t t-if="o.company_id.partner_id.phone"><strong>Phone:</strong><span t-field="o.company_id.partner_id.phone"/><br/></t>
+										<t t-if="o.company_id.partner_id.fax"><strong>Fax:</strong><span t-field="o.company_id.partner_id.fax"/><br/></t>
+                                        <span t-if="o.company_id.gstn"><strong>GSTIN: </strong><span t-field="o.company_id.gstn"/></span><br/>
+                                        <span t-if="o.company_id.vat"><strong>CIN:</strong> <span t-field="o.company_id.vat"/></span>
+		                            		</t>
+		                            </td>
+		                             <td style="border-top-style:none !important;width:150px;line-height: 7px;"><strong>Invoice No.&amp; Date:</strong></td>
+                                    <td colspan="2" style="border-top-style:none !important;width:350px;line-height: 7px;"><strong><span t-field="o.inv_no"/> DT. <span t-field="o.date_invoice"/></strong> </td>
+								</tr>
+								<tr style="font-size:9px;line-height: 7px;">
+                                    <td style="width:150px;line-height: 7px;"><strong>Buyer's Order No.&amp; Date:</strong></td>
+                                    <td style="width:350px;line-height: 7px;" colspan="2"><span t-field="o.order_no"/> DT. <span t-field="o.order_date"/> </td>
+                                </tr>
+                                <tr style="font-size:9px;line-height: 7px;">
+                                    <td style="width:150px;line-height: 7px;"><strong>Country Of Origin:</strong></td>
+                                    <td style="width:350px;line-height: 7px;" colspan="2"><span t-field="o.origin_country"/> </td>
+                                </tr>
+                                <tr style="font-size:9px;line-height: 7px;">
+                                    <td style="width:150px;line-height: 7px;"><strong>Contry Of Destination:</strong></td>
+                                    <td style="width:350px;line-height: 7px;" colspan="2"><span t-field="o.dest_country"/> </td>
+                                </tr>
+                                <tr style="font-size:9px;line-height: 7px;">
+                                    <td style="width:150px;line-height: 7px;"><strong>Mode Of Shipment:</strong></td>
+                                    <td style="width:350px;line-height: 7px;" colspan="2"><t t-esc="get_order(o)[0]['mode_of_ship']"/> </td>
+                                </tr>
+                                <tr style="font-size:9px;height:2px;">
+                                    <td style="width:150px;height:2px;"><strong>Nature Of Payment:</strong></td>
+                                    <td style="width:350px;height:2px;padding-left:7px; padding-top:2px;padding-bottom:2px;margin:0px;" colspan="2"><t t-if="o.payment_term_id" t-esc="o.payment_term_id.name"/> </td>
+                                </tr>
+                                <tr style="font-size:9px;line-height: 7px;">
+                                    <td style="width:150px;line-height: 7px;"><strong>Terms Of Delivery:</strong></td>
+                                    <td style="width:350px;line-height: 7px;" colspan="2"><t t-esc="get_order(o)[0]['delivery_term']"/> </td>
+                                </tr>
+                            <tr style="height: 85px;font-size:9px;">
+                                <td colspan="2" style="height: 80px;font-size:9px;text-transform: uppercase;width:500px;">
+                                    <t t-if="o.is_consignee and o.consignee and (o.partner_id != o.consignee)">
+		                                <strong>Consignee:</strong><br/>
+                                        <!--<address t-field="o.consignee" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;,&quot;phone&quot;,&quot;fax&quot;,&quot;email&quot;], &quot;no_marker&quot;: True}"/>-->
+                                        <span t-field="o.consignee.name"/><br/>
+										<t t-if="o.consignee.street"><span t-field="o.consignee.street"/><br/></t>
+										<t t-if="o.consignee.street2"><span t-field="o.consignee.street2"/><br/></t>
+										<t t-if="o.consignee.city"><span t-field="o.consignee.city"/></t>
+										<t t-if="o.consignee.zip"><span t-field="o.consignee.zip"/></t>
+										<t t-if="o.consignee.country_id"><span t-field="o.consignee.country_id.name"/><br/></t>
+										<t t-if="o.consignee.email"><strong>Email:</strong><span t-field="o.consignee.email"/><br/></t>
+										<t t-if="o.consignee.phone"><strong>Phone:</strong><span t-field="o.consignee.phone"/><br/></t>
+										<t t-if="o.consignee.fax"><strong>Fax:</strong><span t-field="o.consignee.fax"/></t><br/>
+                                        <span t-if="o.consignee.vat">TIN: <span style="font-size:9px;" t-field="o.consignee.vat"/></span>
+		                            </t>
+									<t t-if="not o.is_consignee">
+                                        <strong>Consignee:</strong><br/>
+                                        <!--<address t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;,&quot;phone&quot;,&quot;fax&quot;,&quot;email&quot;], &quot;no_marker&quot;: True}"/>-->
+                                        <span t-field="o.partner_id.name"/><br/>
+										<t t-if="o.partner_id.street"><span t-field="o.partner_id.street"/><br/></t>
+										<t t-if="o.partner_id.street2"><span t-field="o.partner_id.street2"/><br/></t>
+										<t t-if="o.partner_id.city"><span t-field="o.partner_id.city"/></t>
+										<t t-if="o.partner_id.zip"><span t-field="o.partner_id.zip"/></t>
+										<t t-if="o.partner_id.country_id"><span t-field="o.partner_id.country_id.name"/><br/></t>
+										<t t-if="o.partner_id.email"><strong>Email:</strong><span t-field="o.partner_id.email"/><br/></t>
+										<t t-if="o.partner_id.phone"><strong>Phone:</strong><span t-field="o.partner_id.phone"/><br/></t>
+										<t t-if="o.partner_id.fax"><strong>Fax:</strong><span t-field="o.partner_id.fax"/></t><br/>
+                                        <span t-if="o.partner_id.vat">TIN: <span style="font-size:9px;" t-field="o.partner_id.vat"/></span>
+		                            </t>
+									<t t-if="(o.partner_id == o.consignee) and o.is_consignee and o.consignee">
+                                        <strong>Consignee:</strong><br/>
+                                        <!--<address t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;,&quot;phone&quot;,&quot;fax&quot;,&quot;email&quot;], &quot;no_marker&quot;: True}"/>-->
+                                        <span t-field="o.partner_id.name"/><br/>
+										<t t-if="o.partner_id.street"><span t-field="o.partner_id.street"/><br/></t>
+										<t t-if="o.partner_id.street2"><span t-field="o.partner_id.street2"/><br/></t>
+										<t t-if="o.partner_id.city"><span t-field="o.partner_id.city"/></t>
+										<t t-if="o.partner_id.zip"><span t-field="o.partner_id.zip"/></t>
+										<t t-if="o.partner_id.country_id"><span t-field="o.partner_id.country_id.name"/><br/></t>
+										<t t-if="o.partner_id.email"><strong>Email:</strong><span t-field="o.partner_id.email"/><br/></t>
+										<t t-if="o.partner_id.phone"><strong>Phone:</strong><span t-field="o.partner_id.phone"/><br/></t>
+										<t t-if="o.partner_id.fax"><strong>Fax:</strong><span t-field="o.partner_id.fax"/></t><br/>
+                                        <span t-if="o.partner_id.vat">TIN: <span style="font-size:9px;" t-field="o.partner_id.vat"/></span>
+		                            </t>
+		                            </td> 
+		                            <td colspan="2" style="font-size:9px;text-transform: uppercase;width:500px;">
+                                    <t t-if="(o.is_consignee)">
+                                        <strong>Buyer(if other than consignee):</strong><br/>
+                                        <!--<address t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;,&quot;phone&quot;,&quot;mobile&quot;,&quot;fax&quot;,&quot;email&quot;], &quot;no_marker&quot;: True}"/>-->
+                                        <span t-field="o.partner_id.name"/><br/>
+										<t t-if="o.partner_id.street"><span t-field="o.partner_id.street"/><br/></t>
+										<t t-if="o.partner_id.street2"><span t-field="o.partner_id.street2"/><br/></t>
+										<t t-if="o.partner_id.city"><span t-field="o.partner_id.city"/></t>
+										<t t-if="o.partner_id.zip"><span t-field="o.partner_id.zip"/></t>
+										<t t-if="o.partner_id.country_id"><span t-field="o.partner_id.country_id.name"/><br/></t>
+										<t t-if="o.partner_id.email"><strong>Email:</strong><span t-field="o.partner_id.email"/><br/></t>
+										<t t-if="o.partner_id.phone"><strong>Phone:</strong><span t-field="o.partner_id.phone"/><br/></t>
+										<t t-if="o.partner_id.fax"><strong>Fax:</strong><span t-field="o.partner_id.fax"/></t><br/>
+                                        <span t-if="o.partner_id.vat">TIN: <span style="font-size:9px;" t-field="o.partner_id.vat"/></span>
+                                    </t>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                        <div class="page">
+							<style>
+								.table, tr, td, th{
+									border: 1px solid black !important
+								}
+							</style>
+                            <table class="table mb0">
+                            <tbody>
+                            <tr style="font-size:9px;">
+                                <td style="width:200px;"><strong>Pre-carrier By:</strong></td>
+                                <td style="width:248px;"><span t-field="o.pre_carrier"/></td>
+                                <td style="width:202px;"><strong>Place of Reciept:</strong></td>
+                                <td style="width:350px;"><span t-field="o.pl_receipt"/></td>
+                            </tr>
+                            <tr style="font-size:9px;">
+                                <td style="width:200px;"><strong>Vessel/Flight No.:</strong></td>
+                                <td style="width:248px;"><span t-field="o.flight_no"/></td>
+                                <td style="width:202px;"><strong>Port Of Loading:</strong></td>
+                                <td style="width:350px;"><span t-field="o.port_loading"/></td>
+                            </tr>
+                            <tr style="font-size:9px;">
+                                <td style="width:200px;"><strong>Port of Discharge:</strong></td>
+                                <td style="width:248px;"><span t-field="o.port_discharge"/></td>
+                                <td style="width:202px;"><strong>Final Destination:</strong></td>
+                                <td style="width:350px;"><span t-field="o.final_dest"/> </td>
+                            </tr>
+                            <tr style="font-size:9px;">
+                                <td style="width:200px;"><strong>Marks &amp; No.s/Container No.:</strong><br/><span t-field="o.container_no"/><br/><span t-field="o.container_no1"/><br/><span t-field="o.container_no2"/></td>
+                                <td style="width:273px;"><center><strong>No. &amp; Kind of Pkgs.</strong></center><br/><center><span t-field="o.kind_pkg"/><br/><span t-if="o.kind_pkg_unit" t-field="o.kind_pkg_unit.name"/></center></td>
+                                <td style="width:400px;" colspan="2"><strong>Commodity/Description &amp; Services</strong><br/><span t-field="o.commodity_desc"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-condensed table-bordered mt0 mb0" style="cell-padding:0px;font-size:9px;">
+                        <thead style="page-break-inside: avoid; ">
+                            <th>Package No.</th>
+                            <th>Gross WT.</th>
+                            <th>Net WT.</th>
+                            <th>Measurement</th>
+                            <th class="hidden">Cartons</th>
+                            <th width="300px;">Item Description</th>
+                            <th>Quantity</th>
+                            <th>Unit</th>
+                            <th>Remarks</th>
+                        </thead>
+                        <tbody>
+							<t t-if="len(get_lines(o)) &gt;= 1">
+                            	<tr t-foreach="get_lines(o)" t-as="l" style="page-break-inside: avoid; ">
+			                        	<td style="border-top-style:hidden"><span t-esc="l['carton_no']"/></td>
+			                        	<td style="border-top-style:hidden"><span t-esc="l['gross_wt']"/></td>
+			                        	<td style="border-top-style:hidden"><span t-esc="l['net_wt']"/></td>
+			                        	<td style="border-top-style:hidden"><span t-esc="l['measurement']"/></td>
+			                            <td class="hidden" style="border-top-style:hidden"><span t-esc="l['crtns']"/></td>
+			                        	<td style="border:0px;text-transform: uppercase; width:300px;"><span t-esc="l['name']"/></td>
+										<t t-if="l['quantity']!=o.packing_line_ids[-1].quantity">
+											<td style="border-bottom-style:hidden"><span t-if="l['quantity']" t-esc="int(l['quantity'])"/></td>
+											<td style="border-bottom-style:hidden"><span t-if="l['uom_id']" t-esc="l['uom_id']"/></td>
+										</t>
+			                        	<t t-if="l['quantity']==o.packing_line_ids[-1].quantity">
+											<td style="border-top-style:hidden"><span t-if="l['quantity']" t-esc="int(l['quantity'])"/></td>
+											<td style="border-top-style:hidden"><span t-if="l['uom_id']" t-esc="l['uom_id']"/></td>
+										</t>
+			                        	<td style="border:0px;font-size:7px;"><span t-esc="l['remarks']"/></td>
+                            	</tr>
+							</t>
+							<t t-if="len(get_lines(o)) &lt; 1">
+								<tr t-foreach="get_lines(o)" t-as="l">
+									<td style="border:0px"></td>
+	                            	<td style="border:0px"></td>
+	                            	<td style="border:0px"></td>
+	                            	<td class="hidden" style="border:0px"></td>
+	                            	<td style="border:0px;width:400px;"><span t-esc="l['name']"/></td>
+									<td ><span t-esc="int(l['quantity'])"/></td>
+									<td style="border-left-style:hidden"><span t-esc="l['uom_id']"/></td>
+									<td style="border:0px;font-size:7px;"><span t-esc="l['remarks']"/></td>
+								</tr>
+							</t>  
+							<tr>
+								<td colspan="5" style="border:0px"></td>
+                                <!--<td style="border:0px"></td>
+                                <td style="border:0px"></td>
+                                <td style="border:0px"></td>-->
+                                <td class="hidden" style="border:0px"></td>
+                                <!--<td style="border:0px"></td>-->
+
+								<td><t t-foreach="get_qty(o)" t-as="val"><strong><t t-esc="int(val['value'])"/></strong><br/></t></td>
+								<td style="border-left-style:"><t t-foreach="get_qty(o)" t-as="val"><strong><t t-esc="val['name']"/></strong><br/></t></td>
+                                 <td style="border:0px"></td>
+							</tr>                          
+                        </tbody>
+                    </table>
+                    <div style="float:left;font-size:9px;">
+                        <span><strong>IEC No.: </strong><span t-field="o.company_id.iec_no"/></span><br/>
+                        <span><strong>Total Gross Weight: </strong><span t-esc="'%.3f'% round(o.total_grwt)"/> Kgs</span><br/>
+                        <span><strong>Total NET Weight: </strong><span t-esc="'%.3f'% round(o.total_ntwt)"/> Kgs</span><br/>
+                        <span><strong>Total Volume: </strong><span t-esc="'%.3f'% o.total_vol_manuall"/> <t t-if="o.vol_unit" t-esc="o.vol_unit.name"/></span>
+                    </div>
+                    <div class="col-xl-5" style="margin-left:500px;font-size:9px;"><br/>
+                        <p>For <span t-field="o.company_id.name"/></p><br/>
+                        <span>Authorised Signatory</span>
+                    </div>
+                </div>
+	
+				<div class="footer" style="font-size:9px;">
+				  	<div class="text-right">        
+						<ul class="list-inline">
+							<li>Page: <span class="page"/>/<span class="topage"/></li>
+						</ul>
+					</div>
+				</div>
+            </t>
+        </t>
+    </template>
+</odoo>

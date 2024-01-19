@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+		<record id="pi_excel_view" model="ir.ui.view">
+			<field name="name">order.reports</field>
+			<field name="model">order.reports</field>
+			<field name="arch" type="xml">
+				<form string="Export PI">
+				<p class="oe_grey">
+				You want to Print PI Excel Report?
+				</p>			  
+					<footer>
+						<button string="Excel Report" class="btn-primary" name="action_order_report" type="object" />
+						<button string="Cancel" class="btn-primary" special="cancel"/>
+					</footer>
+				</form>						
+			</field>
+		</record>
+
+
+	<record id="order_excel_views" model="ir.ui.view">
+		<field name="name">sale.order.out</field>
+		<field name="model">sale.order.out</field>
+		<field name="arch" type="xml">
+			<form string="Export PI">
+				<group>
+					<field name="file_name" filename="sale_data" />
+					<field name="sale_data" invisible="1" />
+					<field name="file_names" filename="sale_work" invisible="1"/>
+					<field name="sale_work" invisible="1" />
+				</group>
+				<footer>
+					<button string="Cancel" class="btn-primary" special="cancel"/>
+				</footer>
+			</form>
+		</field>
+	</record>	
+		
+
+		<act_window id="action_order_excel" key2="client_action_multi"
+			name="PI Report " res_model="order.reports" src_model="sale.order"
+			view_mode="form" target="new" />
+
+</odoo>

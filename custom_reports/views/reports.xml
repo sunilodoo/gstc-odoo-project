@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- QWeb Reports -->
+        <report 
+            id="Packing_list"
+            model="packing.list"
+            string="Packing List"
+            report_type="qweb-pdf"
+            name="custom_reports.packing_list"
+            file="custom_reports.packing_list"
+			paperformat="custom_reports.paperformat_custom_report_new" 
+        />
+		 <report 
+            id="commercial_invoice_report"
+            model="account.invoice"
+            string="Commercial Invoice"
+            report_type="qweb-pdf"
+            name="custom_reports.commercial_invoice"
+            file="custom_reports.commercial_invoice"
+			paperformat="custom_reports.paperformat_custom_report" 
+        />
+
+		<report 
+            id="export_invoice_report"
+            model="export.invoice"
+            string="Export Invoice"
+            report_type="qweb-pdf"
+            name="custom_reports.export_invoice"
+            file="custom_reports.export_invoice"
+			paperformat="custom_reports.paperformat_custom_report_new1" 
+        />
+
+		<record id="paperformat_custom_report" model="report.paperformat">
+			<field name="name">Commercial Invoice</field>
+			<field name="default" eval="True"/>
+			<field name="format">custom</field>
+			<field name="page_height">297</field>
+			<field name="page_width">210</field>
+			<field name="orientation">Portrait</field>
+			<field name="margin_top">91</field>
+			<field name="margin_bottom">7</field>
+			<field name="margin_left">7</field>
+			<field name="margin_right">7</field>
+			<field name="header_line" eval="False"/>
+			<field name="header_spacing">82</field>
+			<field name="dpi">80</field>
+		</record>
+
+        <record id="paperformat_custom_report_new" model="report.paperformat">
+            <field name="name">Packing List</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">91</field>
+            <field name="margin_bottom">7</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">82</field>
+            <field name="dpi">80</field>
+        </record>
+
+		<record id="paperformat_custom_report_new1" model="report.paperformat">
+            <field name="name">Export Invoice</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">12</field>
+            <field name="margin_bottom">7</field>
+            <field name="margin_left">7</field>
+            <field name="margin_right">7</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">15</field>
+            <field name="dpi">80</field>
+        </record>
+    </data>
+</odoo>

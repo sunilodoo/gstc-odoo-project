@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_packing_list,packing.list,model_packing_list,base.group_user,1,1,1,0
+access_packing_line,packing.line,model_packing_line,base.group_user,1,1,1,1
+access_export_invoice,export.invoice,model_export_invoice,base.group_user,1,1,1,0
+access_export_line,export.line,model_export_line,base.group_user,1,1,1,1
+access_export_lut,export.lut,model_export_lut,base.group_user,1,1,1,0
+access_dispatch_wizard,dispatch.wizard,model_dispatch_wizard,base.group_user,1,1,1,1

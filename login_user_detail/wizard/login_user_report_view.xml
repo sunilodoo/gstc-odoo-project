@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="login_user_report_wizard" model="ir.ui.view">
+            <field name="name">login.user.report</field>
+            <field name="model">login.user.report</field>
+            <field name="arch" type="xml">
+                <form string="Excel Report">
+                    <field name="state" invisible="1"/>
+                    <div states="get">
+                         <group>
+                          	<field name="executed_data" colspan="4"/>
+                            <field name="file_name" filename="executed_data" colspan="4"/>
+                        </group>
+                    </div>
+                     <div states="choose">
+                        <group>
+                            <group>
+                                <field name="start_date" />
+                            </group>
+                            <group>
+                                <field name="end_date"/>
+                            </group>
+
+                             <group>
+                                <field name="login_user" options="{'no_create': True, 'no_open': True}"/>
+                            </group>
+                        </group>                                
+                    </div> 
+                     <footer states="choose">
+                        <button string="Generate Login Report" 
+                            class="btn-primary" 
+                            name="get_login_user_report"
+                            type="object"/>
+                        <button string="Cancel" 
+                            class="btn-default" 
+                            special="cancel" />
+                    </footer>
+                     <footer states="get">
+                        <button special="cancel" string="Cancel" class="oe_highlight" />
+                    </footer> 
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_login_user_report" model="ir.actions.act_window">
+            <field name="name">Login User Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">login.user.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="login_user_report_wizard"/>
+            <field name="target">new</field>
+        </record>
+
+         <menuitem name="Monthly Login User Report" id="login_user_report_menu"
+              parent="base.menu_users" sequence="11" action="action_view_login_user_report"/>
+</odoo>

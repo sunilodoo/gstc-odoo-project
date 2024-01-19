@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>       
+        <record id="view_quotation_tree_seq" model="ir.ui.view">
+            <field name="name">sale.order.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <field name="arch" type="xml">
+                <field name="message_needaction" position="before">
+                    <field name="sequence" widget="handle"/>
+                    <field name="sequence" string="Priority"/>
+                </field>
+                
+            </field>
+        </record>
+
+        <record id="view_order_tree_seq" model="ir.ui.view">
+            <field name="name">sale.order.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <field name="message_needaction" position="before">
+                    <field name="sequence" widget="handle"/>
+                    <field name="sequence" string="Priority"/>
+                </field>
+                
+            </field>
+        </record>
+
+        <record id="sequence_tree_view" model="ir.ui.view">
+        <field name="name">purchase.order.tree</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+        <field name="arch" type="xml">
+
+            <field name="message_unread" position="before">
+                    <field name="sequence" widget="handle"/>
+                    <field name="sequence" string="Priority"/>
+                </field>
+                
+            </field>
+        </record>
+    </data>
+</odoo>
+    

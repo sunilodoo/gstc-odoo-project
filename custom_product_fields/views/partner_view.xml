@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+
+	<!-- Res Partner Inherit -->
+     <record id="additional_res_partner_view" model="ir.ui.view">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+			<xpath expr="//page[@name='sales_purchases']//field[@name='customer']" position="replace">
+			</xpath>
+			<xpath expr="//page[@name='sales_purchases']//field[@name='supplier']" position="replace">
+			</xpath>
+			<field name="country_id" position="attributes">
+				<attribute name="attrs">{'required':[('customer','=',True)]}</attribute>
+			</field>
+			<field name="ref" position="replace">
+			</field>
+			<!--<field name="name" position="after">
+				<field name="ref" attrs="{'required':[('customer', '!=', False)]}"/>
+			</field>-->
+			<field name="phone" position="after">
+				<field name="whatsapp" widget="phone"/>
+				<field name="wechat"/>
+				<field name="date_birth"/>
+				<field name="date_aniversary"/>
+				<field name="religion_id" widget="many2many_tags"/>
+			</field>
+			<field name="website" position="before">
+				<field name="ref" attrs="{'required':[('customer', '!=', False)]}" string="Code"/>
+				<field name="customer_code"/>
+			</field>
+			<field name="category_id" position="after">
+				<field name="customer"/>
+				<field name="classification" widget="many2many_tags" invisible="1"/>
+				<field name="classification_id"/>
+				<field name="company_profile" widget="many2many_tags"/>
+				<field name="product_interest" widget="many2many_tags"/>
+			</field>
+			<field name="lang" position="after">
+				<field name="supplier"/>
+				<field name="target_value"/>
+				<button name="generate_sereis" string="Generate Sereis" type="object" class="oe_highlight" invisible="1"/>
+				<!--<field name="new_cust"/>
+				<field name="trgt" digits="(14, 0)"/>
+				<field name="potvl"/>-->
+			</field>
+			<xpath expr="//page[3]" position="after">
+				<page string="Sales History">
+					<field name="sales_line"/>
+				</page>
+				<page string="Competitive Analysis">
+					<field name="competitive_analysis_line">
+						<tree string="Competitive Analysis" editable="bottom">
+							<field name="name"/>
+							<field name="image"/>
+						</tree>
+					</field>
+				</page>
+            </xpath>
+			
+        </field>
+    </record>
+
+	<record id="additional_res_partner_tree_view" model="ir.ui.view">
+        <field name="name">res.partner.tree</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+			<field name="email" position="replace">
+				<field name="classification" widget="many2many_tags" invisible="1"/>
+			</field>
+			<field name="phone" position="replace">
+				<field name="country_id"/>
+				<field name="user_id"/>
+				<field name="classification_id"/>
+				<field name="company_profile" widget="many2many_tags"/>
+				<field name="product_interest" widget="many2many_tags"/>
+				<field name="category_id"/>
+				<field name="email"/>
+				<field name="phone"/>
+				<field name="whatsapp" widget="phone"/>
+				<field name="wechat"/>
+				<field name="date_birth"/>
+				<field name="date_aniversary"/>
+				<field name="religion_id" widget="many2many_tags"/>
+				<field name="create_date"/>
+			</field>
+			<!--<field name="user_id" position="after">
+				<field name="trgt" digits="(14, 0)"/>
+				<field name="potvl"/>
+			</field>-->
+        </field>
+    </record>
+
+	<record id="sale_history_tree_view" model="ir.ui.view">
+		<field name="name">sale.history.tree</field>
+		<field name="model">sale.history</field>
+		<field name="arch" type="xml">
+			<tree string="Sales History" editable="top">
+				<field name='his_id' invisible="1"/>
+				<field name='image'/>
+				<field name='pl_image'/>
+				<field name='pi_image'/>
+				<field name='so_image'/>
+				<field name='name' />
+				<field name='date'/>
+				<field name='amount' sum="Amount"/>
+				<field name='currency'/>
+				<field name='finance_yr' />
+			</tree>
+		</field>
+	</record>
+	<record id="base.action_partner_form" model="ir.actions.act_window">
+		<field name="name">Customers</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">res.partner</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form,kanban</field>
+		<field name="domain">[('customer','=',1)]</field>
+		<field name="context">{'default_customer':1, 'search_default_customer':1}</field>
+		<field name="search_view_id" ref="base.view_res_partner_filter"/>
+		<field name="filter" eval="True"/>
+		<field name="help" type="html">
+		    <p class="oe_view_nocontent_create">
+		        Click to add a contact in your address book.
+		    </p><p>
+		        OpenERP helps you easily track all activities related to
+		        a customer: discussions, history of business opportunities,
+		        documents, etc.
+		    </p>
+		</field>
+	</record> 
+	<record id="base.action_partner_tree_view1" model="ir.actions.act_window.view">
+		<field name="sequence" eval="0"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="base.view_partner_tree"/>
+		<field name="act_window_id" ref="base.action_partner_form"/>
+	</record>
+	<record id="base.action_partner_form_view2" model="ir.actions.act_window.view">
+		<field eval="1" name="sequence"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="base.view_partner_form"/>
+		<field name="act_window_id" ref="base.action_partner_form"/>
+	</record>
+	<record id="base.action_partner_form_view1" model="ir.actions.act_window.view">
+		<field eval="2" name="sequence"/>
+		<field name="view_mode">kanban</field>
+		<field name="view_id" ref="base.res_partner_kanban_view"/>
+		<field name="act_window_id" ref="base.action_partner_form"/>
+	</record>
+  </data>
+</odoo>
+

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+     <report
+            id="report_customer_pdf"
+            string="Customer Report"
+            model="res.partner"
+            report_type="qweb-pdf"
+            file="customer_report.customer_report_template"
+            name="customer_report.customer_report_template"
+
+        />
+        <report
+            id="customer_xlsx"
+            model="res.partner"
+            string=" "
+            report_type="xlsx"
+            name="customer_report.customer_report_xls.xlsx"
+            file="customer_report.customer_report_xls.xlsx"
+            attachment_use="False"
+        />
+    </data>
+</odoo>

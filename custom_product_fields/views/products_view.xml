@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+
+    <!-- Product Attribute Inherit -->
+     <record id="custom_product_form_view" model="ir.ui.view">
+        <field name="name">product.product.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+			<field name="invoice_policy" position="after">
+           		<field name="comp"/>
+           		<field name="item_code"/>
+           		<field name="no_of_catons"/>
+           		<field name="net_weight"/>
+           		<field name="gross_weight"/>
+				<field name="no_of_item"/>
+           		<field name="toal_qty_carton"/>
+           		<field name="carton_nwt"/>
+           		<field name="carton_gwt"/>
+				<field name="x_attr"/>
+				<field name="y_attr"/>
+           		<field name="z_attr"/>
+				<field name="total_qty" invisible="1"/>
+           		<field name="cartons" invisible="1"/>
+				<field name="vol_wt"/>
+		      	<field name="cbm" invisible="1"/>
+		      	<field name="total_vol_wt" invisible="1"/>
+		      	<field name="total_nwt_crtn" invisible="1"/>
+		      	<field name="total_gwt_crtn" invisible="1"/>
+			</field>
+			<notebook position="inside">
+		     <page string="Art Work">
+		         <field name="art_work_id">
+		             <tree editable="bottom" >
+		                 <field name="name" options="{'no_create': True, 'no_create_edit': True}"/>
+		                 <field name="blister_type" />
+		                 <field name="blister_image" height="40"/>
+		                 <field name="duplex_type" />
+		                 <field name="duplex_image" height="40"/>
+		                 <field name="label_type" />
+		                 <field name="label_image" height="40"/>
+		                 <field name="date" />
+		             </tree>
+		         </field>
+		     </page>
+		    </notebook>
+        </field>
+    </record>
+
+	<record id="custom_product_filter" model="ir.ui.view">
+        <field name="name">product.template.search</field>
+        <field name="model">product.template</field>
+		 <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+			<filter name="filter_to_purchase" position="after">
+				<filter string="Vendors Set" domain="[('seller_ids','!=',False)]"/>
+				<filter string="Vendors Not Set" domain="[('seller_ids','=',False)]"/>
+			</filter>
+        </field>
+    </record>
+    
+    <record id="art_work_from_view" model="ir.ui.view">
+		<field name="name">art.work.form</field>
+		<field name="model">art.work</field>
+		<field name="arch" type="xml">
+			<form string="Art Work">
+				<group>
+					<group>
+						<field name='name'/>
+						<field name='product_id'/>
+						<field name="date"/>
+						<field name='blister_type'/>
+						<field name='blister_image'/>
+					</group>
+					<group>
+						<field name='duplex_type'/>
+						<field name='duplex_image' />
+						<field name='label_type'/>
+						<field name='label_image' />
+					</group>
+				</group>
+			</form>
+		</field>
+	</record>
+    
+    <record id="art_work_brand_tree_view" model="ir.ui.view">
+		<field name="name">art.work.brand.tree</field>
+		<field name="model">art.work.brand</field>
+		<field name="arch" type="xml">
+			<tree string="Art Work Brand" editable="bottom">
+				<field name='name'/>
+			</tree>
+		</field>
+	</record>
+	
+	<record model="ir.actions.act_window" id="action_art_work_brand_tree">
+		 <field name="name">Art Work Brand</field>
+		 <field name="res_model">art.work.brand</field>
+		 <field name="view_mode">tree</field>
+	</record>
+	
+	<menuitem name="Art Work Brand" id="menu_art_brand" parent="sale.prod_config_main" 
+		            sequence="30" action="action_art_work_brand_tree"/>
+
+  </data>
+</odoo>

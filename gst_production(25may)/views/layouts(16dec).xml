@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<data>
+<template id="inherit_header_for_report" inherit_id="report.external_layout_header">
+		<xpath expr="//div[@class='header']" position="replace">
+			 <div class="header">
+			 	<div t-if="doc_model == 'sale.order'">
+						<div class="col-xs-6" style="float:left;">
+										 <div class="row">
+								<div class="col-xs-3">
+									<img t-if="doc.company_id.logo" t-att-src="'data:image/png;base64,%s' % doc.company_id.logo" style="max-height: 45px;"/>
+								</div>
+								<div class="col-xs-9 text-right" style="margin-top:20px;" t-field="doc.company_id.rml_header1"/>
+							</div>
+							<div class="row zero_min_height">
+								<div class="col-xs-12">
+									<div style="border-bottom: 1px solid black;"/>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-6" name="company_address">
+									<!--<span t-field="doc.company_id.partner_id" t-field-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: true}" style="border-bottom: 1px solid black; display:inline-block;"/>-->
+									<span t-field="doc.company_id.name"/><br/>
+									<span t-if="doc.company_id.street" t-field="doc.company_id.street"/><br/>
+									<span t-if="doc.company_id.street2" t-field="doc.company_id.street2"/>
+									<span t-if="doc.company_id.city" t-field="doc.company_id.city"/> -
+									<span t-if="doc.company_id.zip" t-field="doc.company_id.zip"/>,
+									<span t-if="doc.company_id.country_id" t-field="doc.company_id.country_id.name"/>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6" style="float:right; margin-top:20px;"><strong><b><u>Our Bankers :</u></b></strong>
+							<br/>
+							<span>Indian Overseas Bank, 14-15 Farm bhawan</span><br/>
+							<span>Nehru Place- 19, New Delhi</span><br/>
+							<span>Swift code: IOBAINBB 543</span><br/>
+							<span>A/c name: GST CORPORATION LIMITED</span><br/>
+							<span>Account No.: 054302000051599</span>
+
+						</div>
+			</div>
+			<div t-if="doc_model == 'purchase.order'">
+				<div class="col-xs-6" style="float:left; margin-left:-10px;">
+								 <div class="row">
+						<div class="col-xs-3">
+							<img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo" style="max-height: 45px;"/>
+						</div>
+						<div class="col-xs-9 text-right" style="margin-top:20px;" t-field="o.company_id.rml_header1"/>
+					</div>
+					<div class="row zero_min_height">
+						<div class="col-xs-7">
+							<div style="border-bottom: 1px solid black;"/>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-8" name="company_address">
+							<!--<span t-field="doc.company_id.partner_id" t-field-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: true}" style="border-bottom: 1px solid black; display:inline-block;"/>-->
+							<span t-field="o.company_id.name"/><br/>
+							<span t-if="o.company_id.street" t-field="o.company_id.street"/><br/>
+							<span t-if="o.company_id.street2" t-field="o.company_id.street2"/>
+							<span t-if="o.company_id.city" t-field="o.company_id.city"/> -
+							<span t-if="o.company_id.zip" t-field="o.company_id.zip"/>,
+							<span t-if="o.company_id.country_id" t-field="o.company_id.country_id.name"/><br/>
+							<t t-if="o.company_id.phone"><i class="fa fa-phone"></i>  <span t-field="o.company_id.phone"/></t><br/>
+							<t t-if="o.company_id.email"><i class="fa fa-envelope"></i>  <span t-field="o.company_id.email"/></t><br/>
+							<p t-if="o.company_id.gstn"><strong>GSTIN :</strong> <span t-field="o.company_id.gstn"/></p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6" style="float:right; margin-top:20px; margin-right:100px;">
+					<br/>
+						<strong>
+							<p t-if="o.company_id.iso_no"><span t-field="o.company_id.iso_no"/></p>
+							<p t-if="o.company_id.rev_no"><span t-field="o.company_id.rev_no"/></p>
+						</strong>
+				</div>
+			</div>
+			<div class="mb16"/>
+		</div>      
+		</xpath>
+		</template>
+
+<!--============ Footer======================== -->
+	<template id="inherit_footer_for_report" inherit_id="report.external_layout_footer">
+		<xpath expr="//div[@class='footer']" position="replace">
+			 <div class="footer">
+			 	<div t-if="doc_model == 'sale.order'" class="last-page" style="height: 200px;">
+				<div class="text-center" style="border-top: 1px solid black;">
+				    <ul t-if="not company.custom_footer" class="list-inline">
+				        <li t-if="company.phone">Phone: <span t-field="company.phone"/></li>
+
+				        <li t-if="company.fax and company.phone">&amp;bull;</li>
+				        <li t-if="company.fax">Fax: <span t-field="company.fax"/></li>
+
+				        <li t-if="company.email and company.fax or company.email and company.phone">&amp;bull;</li>
+				        <li t-if="company.email">Email: <span t-field="company.email"/></li>
+
+				        <li t-if="company.website and company.email or company.website and company.fax or company.website and company.phone">&amp;bull;</li>
+				        <li t-if="company.website">Website: <span t-field="company.website"/></li>
+				    </ul>
+
+				    <ul t-if="not company.custom_footer" class="list-inline" name="financial_infos">
+				        <li t-if="company.vat">TIN: <span t-field="company.vat"/></li>
+				    </ul>
+
+				    <t t-if="company.custom_footer">
+				        <span t-raw="company.rml_footer"/>
+				    </t>
+
+				    <ul class="list-inline">
+				        <li>Page:</li>
+				        <li><span class="page"/></li>
+				        <li>/</li>
+				        <li><span class="topage"/></li>
+				    </ul>
+				</div>
+
+			</div>
+			<div t-if="doc_model == 'purchase.order'" class="last-page" style="height: 200px;">
+				<div class="text-center" style="border-top: 1px solid black;">
+				    <ul t-if="not company.custom_footer" class="list-inline">
+				        <li t-if="company.phone">Phone: <span t-field="company.phone"/></li>
+
+				        <li t-if="company.fax and company.phone">&amp;bull;</li>
+				        <li t-if="company.fax">Fax: <span t-field="company.fax"/></li>
+
+				        <li t-if="company.email and company.fax or company.email and company.phone">&amp;bull;</li>
+				        <li t-if="company.email">Email: <span t-field="company.email"/></li>
+
+				        <li t-if="company.website and company.email or company.website and company.fax or company.website and company.phone">&amp;bull;</li>
+				        <li t-if="company.website">Website: <span t-field="company.website"/></li>
+				    </ul>
+
+				    <ul t-if="not company.custom_footer" class="list-inline" name="financial_infos">
+				        <li t-if="company.vat">TIN: <span t-field="company.vat"/></li>
+				    </ul>
+
+				    <t t-if="company.custom_footer">
+				        <span t-raw="company.rml_footer"/>
+				    </t>
+
+				    <ul class="list-inline">
+				        <li>Page:</li>
+				        <li><span class="page"/></li>
+				        <li>/</li>
+				        <li><span class="topage"/></li>
+				    </ul>
+				</div>
+
+			</div>
+		</div>      
+		</xpath>
+		</template>
+</data>
+</odoo>

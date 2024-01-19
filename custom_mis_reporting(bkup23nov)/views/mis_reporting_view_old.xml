@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+
+     <record id="mis_reporting_form_view" model="ir.ui.view">
+		<field name="name">mis.reporting.form</field>
+		<field name="model">mis.reporting</field>
+		<field name="arch" type="xml">
+			<form string="MIS Reporting" >
+				<sheet>
+				<group>
+					<group>
+						<field name='name'/>
+						<field name='buyer'/>
+						<field name='region'/>
+						<field name='invoice'/>
+					</group>
+					<group>
+						<field name='salary' groups="base.group_erp_manager"/>
+						<field name='country' />
+						<field name='target_year' widget='selection'/>
+					</group>
+				</group>
+				<notebook>
+					<page string="Information">
+						<group>
+							<group>
+								<field name='target'/>
+								<field name='production'/>
+							</group>
+							<group>
+								<field name='execute'/>
+								<field name='pipeline'/>
+							</group>
+						</group>
+						<group>
+							<group>
+								<field name='month'/>
+							</group>
+							<group>
+								<field name='month_unit' />
+							</group>
+						</group>
+					</page>
+					<page string="Remarks">
+						<group>
+							<group>
+								<field name='remarks'/>
+							</group>
+						</group>
+					</page>
+				</notebook>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="mis_reporting_tree_view" model="ir.ui.view">
+		<field name="name">mis.reporting.tree</field>
+		<field name="model">mis.reporting</field>
+		<field name="arch" type="xml">
+			<tree string="MIS Reporting" >
+				<field name='name'/>
+				<field name='buyer'/>
+				<field name='country' />
+				<field name='invoice'/>
+				<field name='target' sum="Target"/>
+				<field name='execute' sum="Executed"/>
+				<field name='month'/>
+				<field name='month_unit' sum="Total in month"/>
+			</tree>
+		</field>
+	</record>
+
+	
+	<record id="custom_filter_mis_reporting" model="ir.ui.view">
+        <field name="name">mis.reporting.filter</field>
+        <field name="model">mis.reporting</field>
+        <field name="arch" type="xml">
+			 <search string="Search MIS">
+	            <field name="name" string="Coordinator" filter_domain="[('name','ilike',self)]"/>
+				<field name="country" string="Country"/>
+				<field name="buyer" string="Buyer"/>
+				<field name="region" string="Region" filter_domain="[('region','ilike',self)]"/>
+				<field name="invoice" string="Invoice" filter_domain="[('invoice','ilike',self)]"/>
+				<group expand="1" string="Group By">
+					<filter string="Coordinator" context="{'group_by':'name'}"/>
+	                <filter string="Month" context="{'group_by':'month'}"/>
+	            </group>
+			</search>
+        </field>
+    </record>
+	<!-- ####### REGION ######## -->
+	<record id="res_region_form_view" model="ir.ui.view">
+		<field name="name">res.region.form</field>
+		<field name="model">res.region</field>
+		<field name="arch" type="xml">
+			<form string="Region" >
+				<sheet><group><group>
+				<field name='name'/>
+				</group></group></sheet>
+			</form>
+		</field>
+	</record>
+	<record id="res_region_tree_view" model="ir.ui.view">
+		<field name="name">res.region.tree</field>
+		<field name="model">res.region</field>
+		<field name="arch" type="xml">
+			<tree string="Region" >
+				<field name='name'/>
+			</tree>
+		</field>
+	</record>
+
+	<!-- ####### Financial Year ######## -->
+	<record id="fin_year_form_view" model="ir.ui.view">
+		<field name="name">fin.year.form</field>
+		<field name="model">fin.year</field>
+		<field name="arch" type="xml">
+			<form string="Financial Year" >
+				<sheet><group><group>
+				<field name='name'/>
+				</group></group></sheet>
+			</form>
+		</field>
+	</record>
+	<record id="fin_year_tree_view" model="ir.ui.view">
+		<field name="name">fin.year.tree</field>
+		<field name="model">fin.year</field>
+		<field name="arch" type="xml">
+			<tree string="Financial Year" >
+				<field name='name'/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_mis_reporting_form">
+		 <field name="name">MIS Reporting</field>
+		 <field name="res_model">mis.reporting</field>
+		 <field name="view_mode">tree,form</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_res_region_form">
+		 <field name="name">Region</field>
+		 <field name="res_model">res.region</field>
+		 <field name="view_mode">tree,form</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_fin_year_form">
+		 <field name="name">Financial Year</field>
+		 <field name="res_model">fin.year</field>
+		 <field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem name="MIS Reporting"
+            id="menu_mis_report"
+            sequence="100" groups="base.group_user"/>
+
+        <menuitem name="MIS Reporting"
+            id="submenu_mis_reporting"
+            parent="menu_mis_report"
+            sequence="1"/>
+		<menuitem name="MIS Reporting" id="menu_start" parent="submenu_mis_reporting"
+		            sequence="1" action="action_mis_reporting_form"/>
+
+		<menuitem name="Region" id="menu_region" parent="submenu_mis_reporting" groups="base.group_erp_manager"
+		            sequence="2" action="action_res_region_form"/>
+
+		<menuitem name="Financial Year" id="menu_fin_year" parent="submenu_mis_reporting" groups="base.group_erp_manager"
+		            sequence="3" action="action_fin_year_form"/>
+
+  </data>
+</odoo>

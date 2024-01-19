@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+	<!-- Res Partner Inherit -->
+    <record id="custom_res_partner_view" model="ir.ui.view">
+        <field name="name">res.partner.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+					<field name="phone" position="after">
+						<field name="visitor_no"/>
+						<field name="visit_date"/>
+					</field>
+					<field name="country_id" position="attributes">
+						<attribute name="invisible">1</attribute>
+					</field>
+					<field name="ref" position="before">
+						<field name="country_id"/>
+					</field>
+					<!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+        </field>
+    </record>
+
+	<record id="custom_res_partner_tree_view" model="ir.ui.view">
+        <field name="name">res.partner.tree</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+        	<field name="phone" position="after">
+						<field name="visitor_no"/>
+						<field name="visit_date"/>
+					</field>
+					<!--+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-->
+					<field name="display_name" position="attributes">
+						<attribute name="string">Company</attribute>
+					</field>
+					<field name="country_id" position="attributes">
+						<attribute name="invisible">1</attribute>
+					</field>
+					<field name="display_name" position="after">
+						<field name="country_id"/>
+					</field>
+					<field name="parent_id" position="attributes">
+						<attribute name="string"> Person Name</attribute>
+					</field>
+					<field name="email" position="attributes">
+						<attribute name="invisible">1</attribute>
+					</field>
+					<field name="parent_id" position="after">
+						<field name="mobile"/>
+						<field name="email"/>
+					</field>
+        </field>
+  </record>
+  <record model="ir.actions.act_window" id="crm.crm_lead_opportunities_tree_view">
+    <field name="context">{
+        'default_type': 'opportunity',
+        'default_user_id': uid,
+        'search_default_assigned_to_me': 0,
+        }
+    </field>
+</record>
+  <!--##################product.interest##########-->
+  <record id="product_interest_form_view" model="ir.ui.view">
+		<field name="name">product.interest.form</field>
+		<field name="model">product.interest</field>
+		<field name="arch" type="xml">
+			<form string="Product Interest">
+				<field name='name'/>
+			</form>
+		</field>
+	</record>
+    <record id="product_interest_tree_view" model="ir.ui.view">
+		<field name="name">product.interest.tree</field>
+		<field name="model">product.interest</field>
+		<field name="arch" type="xml">
+			<tree string="Product Interest">
+				<field name='name'/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_product_interest">
+		 <field name="name">Product Interest</field>
+		 <field name="res_model">product.interest</field>
+		 <field name="view_type">form</field>
+     <field name="view_mode">tree,form</field>
+	</record>
+	<menuitem name="Product Interest" id="menu_product_interst" parent="sale.prod_config_main" sequence="10" action="action_product_interest"/>
+
+	<record id="closure_reason_form_view" model="ir.ui.view">
+		<field name="name">closure.reason.form</field>
+		<field name="model">closure.reason</field>
+		<field name="arch" type="xml">
+			<form string="Reason For Non Closure">
+				<group>
+					<field name='name'/>
+				</group>
+			</form>
+		</field>
+	</record>
+    <record id="closure_reason_tree_view" model="ir.ui.view">
+		<field name="name">closure.reason.tree</field>
+		<field name="model">closure.reason</field>
+		<field name="arch" type="xml">
+			<tree string="Reason For Non Closure">
+				<field name='name'/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_closure_reason">
+		 <field name="name">Reason For Non Closure</field>
+		 <field name="res_model">closure.reason</field>
+		 <field name="view_type">form</field>
+     <field name="view_mode">tree,form</field>
+	</record>
+	<menuitem name="Reason For Non Closure" id="menu_closure_reason" parent="sale.prod_config_main" sequence="11" action="action_closure_reason"/>
+	<!--Classification And Priority  -->
+
+	<record id="customer_classify_form_view" model="ir.ui.view">
+		<field name="name">customer.classify.form</field>
+		<field name="model">customer.classify</field>
+		<field name="arch" type="xml">
+			<form string="Customer Classify">
+				<group>
+					<group>
+					<field name='name'/>
+					<field name='priority_no'/>
+					<field name='customer_type'/>
+				</group>
+				</group>
+			</form>
+		</field>
+	</record>
+    <record id="customer_classify_tree_view" model="ir.ui.view">
+		<field name="name">customer.classify.tree</field>
+		<field name="model">customer.classify</field>
+		<field name="arch" type="xml">
+			<tree string="Customer Classify">
+				<field name='name'/>
+				<field name='priority_no'/>
+				<field name='customer_type'/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_customer_classify">
+		 <field name="name">Customer Classify and Priority</field>
+		 <field name="res_model">customer.classify</field>
+		 <field name="view_type">form</field>
+     <field name="view_mode">tree,form</field>
+	</record>
+	<menuitem name="Customer Classify and Priority" id="menu_customer_classify" parent="sale.prod_config_main" sequence="12" action="action_customer_classify"/>
+  </data>
+</odoo>

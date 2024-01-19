@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="view_order_form_inherit" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='product_uom']"
+                   position="after">
+                <field name="ratio_con_1" force_save="1" invisible="1"/>
+                <field name="piece" force_save="1"/>
+                <field name="product_uom_1" force_save="1" groups="uom.group_uom"
+                       class="oe_inline oe_no_button"/>
+                <field name="ratio_con_2" force_save="1" invisible="1"/>
+
+                <field name="grand" force_save="1"/>
+
+            </xpath>
+
+
+            <!--            <xpath expr="/form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='price_subtotal']"-->
+            <!--                    position="replace">-->
+            <!--                <field name="price_subtotal" force_save="1"/>-->
+
+            <!--            </xpath>-->
+
+
+        </field>
+    </record>
+
+</odoo>

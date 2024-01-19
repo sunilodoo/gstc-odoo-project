@@ -1,0 +1,35 @@
+.custom_size [data-field="product_id"]{
+	min-width: 250px;
+}
+.custom_size [data-field="vendor"]{
+	min-width: 100px;
+}
+.custom_size th{
+    text-align: right;
+}
+
+
+/*
+.custom_size table {
+    border-collapse: collapse;
+    overflow-x: scroll;
+    display: block;
+}
+.custom_size thead {
+    background-color: #EFEFEF;
+}
+.custom_size thead, tbody {
+    display: block;
+}
+.custom_size tbody {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 140px;
+}
+.custom_size td, th {
+    min-width: 100px;
+    height: 25px;
+    border: dashed 1px lightblue;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}*/

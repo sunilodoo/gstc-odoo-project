@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+
+    <!-- Sale Order Line Inherit -->
+     <record id="custom_sale_order_view" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+
+        	<xpath expr="//field[@name='order_line']/tree//field[@name='product_id']" position="after">
+				<field name="is_descr"/>
+				<field name="name"/>
+			</xpath>
+
+			<xpath expr="//field[@name='order_line']/tree//field[@name='product_uom']" position="after">
+			<field name="vendor_id"/>
+
+
+			</xpath>
+
+			<xpath expr="//field[@name='order_line']/tree//field[@name='price_subtotal']" position="after">
+				<field name="hsn_code"/>
+				<field name="purchase_id"/>
+				<field name="attach_ment" widget="image" style="width:20%%"/>
+				<field name="edd"/>
+				<field name="edrg"/>
+				<field name="adrg"/>
+				<field name="remarks"/>
+				<field name="cartons" digits="(14, 4)" readonly="1"/>
+				<field name="vol_wt" digits="(14, 4)" readonly="1" invisible='1'/>
+				<field name="cbm" digits="(14, 4)" readonly="1"/>
+				<field name="total_nwt_crtn" digits="(14, 4)" readonly="1" invisible='1'/>
+				<field name="total_gwt_crtn" digits="(14, 4)" readonly="1" invisible='1'/>
+				<field name="total_vol_wt" digits="(14, 4)" readonly="1" invisible='1'/>
+			</xpath>
+			<xpath expr="//field[@name='order_line']/tree//field[@name='name']" position="replace">
+				
+			</xpath>
+        </field>
+    </record>
+		
+	<record model="ir.actions.act_window" id="action_so_review_proc">
+        <field name="name">SO's Summary</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,form,</field>
+        <field name="domain">[('state','=','sale')]</field>
+        <field name="context">{'create':0, 'edit':0}</field>
+    </record> 
+	<menuitem name="SO's Summary" id="menu_so_review" parent="purchase.menu_procurement_management"
+		            sequence="9" action="action_so_review_proc"/>
+  </data>
+</odoo>

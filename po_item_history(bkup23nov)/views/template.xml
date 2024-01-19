@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <template id="custom_assets_backend" name="Po item history" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/po_item_history/static/src/css/style.css"/>
+				<!--<script type="text/javascript" src="/po_item_history/static/src/js/main.js"></script>-->
+            </xpath>
+        </template>
+</odoo>

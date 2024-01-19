@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data> 
+		<!-- stock picking Inherit -->
+     <record id="gstc_stock_form_view" model="ir.ui.view">
+        <field name="name">stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+			<field name='origin' position='after'>
+				<field name='so_no'/>
+			</field>
+			<field name='picking_type_id' position='after'>
+				<field name='cartage'/>
+				<field name='packing'/>
+				<field name='others'/>
+			</field>
+        </field>
+    </record>
+
+	<record id="gstc_stock_tree_view" model="ir.ui.view">
+        <field name="name">stock.picking.tree</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+			<field name='name' position='before'>
+				<field name='so_no'/>
+			</field>
+        </field>
+    </record>
+
+	<record id="gstc_pack_operation_tree_view" model="ir.ui.view">
+        <field name="name">stock.pack.operation.form</field>
+        <field name="model">stock.pack.operation</field>
+        <field name="inherit_id" ref="stock.view_pack_operation_details_form"/>
+        <field name="arch" type="xml">
+			<xpath expr="//form" position='inside'>
+				<group string="Extra Info">
+					<group>
+						<field name="bill_no"/>
+						<field name="bill_date"/>
+						<field name="batch_no"/>
+					</group>
+					<group>
+						<field name="mfg_date"/>
+						<field name="expiry_date"/>
+						<field name="steriliz_ref"/>
+					</group>
+				</group>
+			</xpath>
+        </field>
+    </record>
+
+    </data>
+</openerp>

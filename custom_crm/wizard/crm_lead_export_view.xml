@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="crm_lead_export_wizard" model="ir.ui.view">
+            <field name="name">crm.lead.export.form</field>
+            <field name="model">crm.lead.export</field>
+            <field name="arch" type="xml">
+                <form string="CRM Lead Export">
+                    <field name="state" invisible="1"/>
+                    <field name="source_id"/>
+                    <div states="get">
+                         <group>
+                          	<field name="export_data" colspan="4"/>
+                            <field name="file_name" filename="export_data" colspan="4"/>
+                        </group>
+                    </div>
+                    <!-- <div states="choose">
+                        <group>
+                            <group>
+                                <field name="start_date" />
+                            </group>
+                            <group>
+                                <field name="end_date"/>
+                            </group>
+                        </group>                                
+                    </div> -->
+                    <footer states="choose">
+                        <button string="Generate Report" 
+                            class="btn-primary" 
+                            name="date_export"
+                            type="object"/>
+                        <button string="Cancel" 
+                            class="btn-default" 
+                            special="cancel" />
+                    </footer>
+                    <footer states="get">
+                        <button special="cancel" string="Cancel" class="oe_highlight" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_crm_lead_export" model="ir.actions.act_window">
+            <field name="name">CRM Lead Export</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.lead.export</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="crm_lead_export_wizard"/>
+            <field name="target">new</field>
+        </record>
+
+         <menuitem name="CRM Lead Export" id="crm_lead_export_menu"
+              parent="sales_team.menu_sale_report" sequence="7" action="action_view_crm_lead_export"/>
+</odoo>

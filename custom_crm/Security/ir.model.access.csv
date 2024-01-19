@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_closure_reason,closure.reason,model_closure_reason,base.group_user,1,1,1,1
+access_customer_classify,customer.classify,model_customer_classify,base.group_user,1,1,1,1
+access_crm_lead_export,crm.lead.export,model_crm_lead_export,base.group_user,1,1,1,1
+access_crm_lead_import,crm.lead.import,model_crm_lead_import,base.group_user,1,1,1,1
+access_custom_lead,custom.lead,model_custom_lead,base.group_user,1,1,1,1

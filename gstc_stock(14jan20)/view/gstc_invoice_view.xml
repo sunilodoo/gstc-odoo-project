@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data> 
+		<!-- Account Invoice Inherit -->
+     <record id="gstc_invoice_form_view" model="ir.ui.view">
+        <field name="name">account.invoice.form</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+			<field name='partner_id' position='after'>
+				<field name='is_consignee'/>
+				<field name='consignee' attrs="{'invisible': [('is_consignee', '=', False)]}"/>
+				<field name='packing_flag' invisible='1'/>
+				<field name='export_flag'/>
+				<field name='hide_dispatch' invisible='1'/>
+			</field>
+			<field name='amount_untaxed' position='after'>
+				<field name='freight_charge'/>
+				<field name='bank_charge'/>
+				<field name='ext_charge'/>
+				<field name='global_disc'/>
+			</field>
+			<xpath expr="//button[@name='action_invoice_open']" position='after'>
+				<field name='hide_dispatch' invisible='1'/>
+				<button name="dispatch" type="object"  string="Dispatch" class="oe_highlight" attrs="{'invisible':[('hide_dispatch','=', True)]}"/>
+				<button name="generate_packing" type="object"  string="Packing List" class="oe_highlight" attrs="{'invisible':[('packing_flag','=', True)]}"/>
+
+				<button name="generate_export" type="object"  string="Export Invoice" class="oe_highlight" attrs="{'invisible':['|','|',('state','=','draft'),('packing_flag','=', False),('export_flag','=',True)]}"/>
+			</xpath>
+			<field name='date_invoice' position='before'>
+				<field name='order_no'/>
+				<field name='order_date'/>
+				<field name='inv_no'/>
+			</field>
+			<xpath expr="//page[2]" position="after">
+				<page string="Reporting Info" >
+					<group>
+					<group>
+						<field name="origin_country"/>
+						<field name="pre_carrier"/>
+						<field name="flight_no"/>
+						<field name="port_discharge"/>
+						<label for="container_no" />
+                        <div>
+                            <field name="container_no" class="oe_inline"/>
+                            <field name="container_no1" />
+                            <field name="container_no2" />
+                        </div>
+						<!--field name="container_no"/-->
+						<!--<field name="iec_no"/>-->
+						<field name="total_grwt"/>
+						<field name="total_ntwt"/>
+					</group>
+					<group>
+						<field name="dest_country"/>
+						<field name="pl_receipt"/>
+						<field name="port_loading"/>
+						<field name="final_dest"/>
+						<field name="kind_pkg"/>
+						<field name="commodity_desc"/>
+					</group>
+					</group>
+				</page>
+        	</xpath>
+			<xpath expr="//form/sheet//group" position='before'>
+				<div class="oe_button_box" name="button_box" >
+                   <button class="oe_stat_button" name="action_view_packing"
+                       type="object" icon="fa-shopping-bag" attrs="{'invisible':['|',('state','=','draft'),('packing_flag','=', False)]}">
+						<field name="packing_count" widget="statinfo" string="Packing List" help="Packing List" />
+                   </button>
+					<button class="oe_stat_button" name="action_view_export"
+                       type="object" icon="fa-shopping-bag" attrs="{'invisible':['|','|',('state','=','draft'),('packing_flag','=', False),('export_flag','=',False)]}">
+						<field name="export_count" widget="statinfo" string="Export Invoice" help="Export Invoice" />
+                   </button>
+                </div>
+        	</xpath>
+        </field>
+    </record>
+
+    </data>
+</openerp>

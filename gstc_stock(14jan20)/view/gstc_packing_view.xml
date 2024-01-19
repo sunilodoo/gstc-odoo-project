@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data> 
+		<!-- Packing List -->
+     <record id="gstc_packing_form_view" model="ir.ui.view">
+        <field name="name">packing.list.form</field>
+        <field name="model">packing.list</field>
+        <field name="arch" type="xml">
+			<form string="Packing List" >
+				<sheet>
+				<group>
+					<group>
+						<field name="partner_id"/>
+						<field name='is_consignee'/>
+						<field name='consignee' attrs="{'invisible': [('is_consignee', '=', False)]}"/>
+						<!--field name='hide_dispatch' invisible='1'/-->
+						<field name='payment_term_id'/>
+					</group>
+					<group>
+						<field name="order_no"/>
+						<field name="order_date"/>
+						<field name='inv_no'/>
+						<field name='date_invoice'/>
+						<field name='user_id' />
+						<field name='team_id'/>
+						<field name='currency_id'/>
+					</group>
+				</group>
+			<notebook>
+				<page string="Packing Lines" >
+					<field name="packing_line_ids"/>
+				</page>
+				<page string="Other Info" >
+					<group>
+					<group>
+						<field name="origin"/>
+					</group>
+					<group>
+						<field name="company_id"/>
+					</group>
+					</group>
+				</page>
+				<page string="Reporting Info" >
+					<group>
+					<group>
+						<field name="name"/>
+						<field name="origin_country"/>
+						<field name="pre_carrier"/>
+						<field name="flight_no"/>
+						<field name="port_discharge"/>
+						<label for="container_no" />
+                        <div>
+                            <field name="container_no" class="oe_inline"/>
+                            <field name="container_no1" />
+                            <field name="container_no2" />
+                        </div>
+						<!--field name="container_no"/-->
+						<!--<field name="iec_no"/>-->
+						<field name="total_grwt"/>
+						<field name="total_ntwt"/>
+						<field name="total_vol"/>
+					</group>
+					<group>
+						<field name="dest_country"/>
+						<field name="pl_receipt"/>
+						<field name="port_loading"/>
+						<field name="final_dest"/>
+						<field name="kind_pkg"/>
+						<field name="commodity_desc"/>
+					</group>
+					</group>
+				</page>
+        	</notebook>
+			</sheet>
+			</form>
+        </field>
+    </record>
+
+	<record id="gstc_packing_tree_view" model="ir.ui.view">
+		<field name="name">packing.list.tree</field>
+		<field name="model">packing.list</field>
+		<field name="arch" type="xml">
+			<tree string="Packing List" class='custom_size'>
+				<field name="partner_id"/>
+				<field name="origin_country"/>
+				<field name="pre_carrier"/>
+				<field name="flight_no"/>
+				<field name="port_discharge"/>
+				<field name="container_no"/>
+				<field name="iec_no"/>
+				<field name="total_grwt"/>
+				<field name="total_ntwt"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="gstc_packing_line_tree_view" model="ir.ui.view">
+		<field name="name">packing.line.tree</field>
+		<field name="model">packing.line</field>
+		<field name="arch" type="xml">
+			<tree string="Packing Lines" editable="bottom">
+				<field name="carton_no"/>
+				<field name="gross_wt"/>
+				<field name="net_wt"/>
+				<field name="measurement"/>
+				<field name="crtns"/>
+				<!--<field name="product_id"/>-->
+				<field name="name"/>
+				<field name="quantity"/>
+				<field name="uom_id"/>
+				<field name="remarks"/>
+				<!--<field name="price_unit"/>
+				<field name="tax_id" widget="many2many_tags"/>
+				<field name="price_subtotal"/>-->
+			</tree>
+		</field>
+	</record>
+	
+	<record model="ir.actions.act_window" id="action_gstc_packing_form">
+		 <field name="name">Packing List</field>
+		 <field name="res_model">packing.list</field>
+		 <field name="view_mode">tree,form</field>
+	</record>
+	<menuitem id="menu_gstc_packing" action="action_gstc_packing_form" parent="account.menu_finance_receivables" sequence="12"/>
+
+    </data>
+</openerp>

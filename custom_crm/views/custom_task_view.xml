@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+	<!-- Project Task Inherit -->
+     <record id="custom_task_view" model="ir.ui.view">
+        <field name="name">project.task.form</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+			<xpath expr="//page[1]" position="after">
+				<page string="Image" >
+					<field name="task_image" mode="kanban" context="{'default_name': name}"/>
+					 <kanban>
+                    <!--list of field to be loaded -->
+                    <templates>
+                    <t t-name="kanban-box">
+                            <div class="oe_product_vignette">
+                                <a type="open">
+                                    <img class="oe_kanban_image"
+                                        t-att-src="kanban_image('task.image', 'image', record.id.value)" />
+                                </a>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+				</page>
+        	</xpath>
+        </field>
+    </record>
+
+	<record id="custom_child_task_view" model="ir.ui.view">
+        <field name="name">task.image.form</field>
+        <field name="model">task.image</field>
+        <field name="arch" type="xml">
+			<form string="Image" >
+				<sheet>
+				<group>
+					<group>
+						<field name='name'/>
+						<field name='image'/>
+						<field name='img_id' invisible='1'/>
+					</group>
+				</group>
+				</sheet>
+			</form>
+        </field>
+    </record>
+
+	<record id="custom_child_task_tree_view" model="ir.ui.view">
+		<field name="name">task.image.tree</field>
+		<field name="model">task.image</field>
+		<field name="arch" type="xml">
+			<tree string="Image" >
+				<field name='name'/>
+				<field name='image'/>
+			</tree>
+		</field>
+	</record>
+
+
+	<record id="mis_child_task_kanban_view" model="ir.ui.view">
+		<field name="name">task.image.kanban</field>
+		<field name="model">task.image</field>
+		<field name="arch" type="xml">
+			<kanban>
+			<!--list of field to be loaded -->
+			<field name="name" />
+			<field name="image" />
+			<templates>
+				<t t-name="kanban-box">
+					<div class="oe_product_vignette">
+						<a type="open">
+							<img class="oe_kanban_image"
+								t-att-src="kanban_image('task.image', 'image', record.id.value)" />
+						</a>
+						<div class="oe_product_desc">
+							<a t-if="!read_only_mode" type="delete" class="fa fa-times pull-right"/>
+						</div>
+					</div>
+				</t>
+			</templates>
+			</kanban>
+		</field>
+	</record>
+
+	<record id="action_child_task_form" model="ir.actions.act_window">
+        <field name="name">Image</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">task.image</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+  	</record>
+
+  </data>
+</odoo>

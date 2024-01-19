@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_task_image,task.image,model_task_image,base.group_user,1,1,1,1
+access_customer_type,customer.type,model_customer_type,base.group_user,1,1,1,1
+access_lead_image,lead.image,model_lead_image,base.group_user,1,1,1,1

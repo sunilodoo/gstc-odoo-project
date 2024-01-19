@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+	<!-- Sale Order Line Inherit -->
+     <record id="so_to_mis_view" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+			<field name='pricelist_id' position='after'>
+				<field name='priority'/>
+				<field name='mis_flag' invisible="1"/>
+			</field>
+			<field name='payment_term_id' position='after'>
+				<field name='payment_detail'/>
+			</field>
+			<xpath expr="//button[@name='action_confirm']" position="after">
+                <button name="update_mis" string="Update MIS" type="object" class="oe_highlight" attrs="{'invisible': ['|',('state','in',('draft','sent','cancel')),('mis_flag','!=', False)]}"/>
+				<button name="update_carton_val" string="Update Val" type="object" class="oe_highlight" />
+        	</xpath>
+        </field>
+    </record>
+
+	<!-- Purchase Order Inherit -->
+     <record id="so_to_mis_po_view" model="ir.ui.view">
+        <field name="name">purchase.order.form</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+			<field name="date_order" position="after">
+				<field name="proc_name"/>
+				<field name="priority"/>
+				<field name="other_ref"/>
+			</field>
+			<xpath expr="//page[1]" position="after">
+					<page string="Report Info." >
+						<group>
+							<group>
+								<field name="active"
+                                options='{"terminology": "archive"}'/>
+								<field name="dlvy_confm_date"/>
+								<field name="oe_dlvy_req_date"/>
+								<field name="act_dlvy_date"/>
+								<field name="bill_no"/>
+								<field name="sob_date"/>
+								<field name="pack_docs_day"/>
+								<field name='is_merger'/>
+							</group>
+							<group>
+								<field name="dlvy_req_date"/>
+								<field name="cur_dlvy_date"/>
+								<field name="inv_date"/>
+								<field name="bill_date"/>
+								<field name="doc_bank_date"/>
+								<field name="days_dispatch" />
+								<field name='is_problem'/>
+							</group>
+						</group>
+						<group invisible="1">
+							<group>
+								<field name='days_to_place'/>
+                        		<field name="behind_ahead"/>
+                        		<!--<field name="d_to_d"/>-->
+							</group>
+						</group>
+								<field name='problem' attrs="{'invisible':[('is_problem', '!=', True)]}"/>
+					</page>
+                </xpath>
+				<field name="order_line" position="after">
+					<group>
+						<field name="is_notes"/>
+						<field name="hss"/>
+					</group>
+				</field>
+				<field name="notes"  position="replace">
+				    <field name="notes" attrs="{'invisible': [('is_notes', '=', False)]}"/>
+				</field>
+        </field>
+    </record>
+
+	<record id="so_to_mis_po_tree_view" model="ir.ui.view">
+        <field name="name">purchase.order.tree</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+        <field name="arch" type="xml">
+			<field name="partner_id" position="after">
+				<field name="priority"/>
+			</field>
+			<field name="company_id" position="replace">
+			</field>
+			<field name="date_planned" position="after">
+				<field name="dlvy_confm_date"/>
+				<field name="oe_dlvy_req_date"/>
+				<field name="act_dlvy_date"/>
+				<field name="bill_no"/>
+				<field name="sob_date"/>
+				<field name="pack_docs_day"/>
+				<field name="dlvy_req_date"/>
+				<field name="cur_dlvy_date"/>
+				<field name="inv_date"/>
+				<field name="bill_date"/>
+				<field name="doc_bank_date"/>
+				<field name="days_dispatch" />
+			</field>
+        </field>
+    </record>
+
+	<record id="so_to_mis_purchase_order_filter" model="ir.ui.view">
+        <field name="name">request.quotation.select</field>
+        <field name="model">purchase.order</field>
+		 <field name="inherit_id" ref="purchase.view_purchase_order_filter"/>
+        <field name="arch" type="xml">
+			<filter name="invoiced" position="after">
+				<filter string="SO" domain="[]" context="{'group_by':'origin'}"/>
+			</filter>
+        </field>
+    </record>
+
+  </data>
+</odoo>

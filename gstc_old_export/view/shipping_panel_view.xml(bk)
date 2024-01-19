@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data> 
+		<!-- Packing List -->
+     <record id="gstc_shipping_panel_form_view" model="ir.ui.view">
+        <field name="name">shipping.panel.form</field>
+        <field name="model">shipping.panel</field>
+        <field name="arch" type="xml">
+			<form string="Shipping Panel" >
+				<sheet>
+				<group>
+					<group>
+						<field name='partner_id'/>
+						<field name='exporter_id' options="{'no_create': True, 'no_create_edit':True}" />
+						<field name='country_id' options="{'no_create': True, 'no_create_edit':True}"/>
+						<field name='carrier_id' options="{'no_create': True, 'no_create_edit':True}"/>
+						<field name="incoterm_id" options="{'no_create': True, 'no_create_edit':True}"/>
+						<field name='mkt_coordinator' options="{'no_create': True, 'no_create_edit':True}" groups="base.group_erp_manager"/>
+						<field name="active"
+                                options='{"terminology": "archive"}' groups="base.group_erp_manager"/>
+						<field name='old_export_id' groups="base.group_erp_manager"/>
+					</group>
+					<group>
+						<field name="order_no"/>
+						<field name="order_date"/>
+						<field name='company_id' groups="base.group_erp_manager"/>
+						<field name="name"/>
+						<field name='date_invoice'/>
+						<field name='financial_year'/>
+						<field name='amount'/>
+						<field name='shippig_cost' digits="(14, 0)"/>
+					</group>
+				</group>
+				<notebook>
+					<page string="Documentation" >
+						<group>
+							<group>
+								<field name='shipping_bill_no'/>
+								<field name='shipping_bill_date'/>
+								<field name='port_code' />
+								<field name='drawback_amount'/>
+								<field name="bl_awb_no"/>
+								<field name="bl_awb_date"/>
+							</group>
+							<group>
+								<field name="document_send_date"/>
+								<field name='document_tracking_no'/>
+								<field name="courier_name"/>
+								<field name='document_delvy_date'/>
+							</group>
+						</group>
+					</page>
+					<page string="CUSTOM CLEARANCE CHARGES" >
+						<group>
+							<group>
+								<field name='cha_name'/>
+								<field name='service_charge'/>
+								<field name='shipping_process_fee' />
+								<field name='measurement_fee'/>
+								<field name="load_upload_fee"/>
+								<field name="adc_noc_fee"/>
+							</group>
+							<group>
+								<field name="challan_penalty_fee"/>
+								<field name='clearance_misc_fee'/>
+								<field name="clearance_total_fee"/>
+								<field name='clearance_remarks'/>
+							</group>
+						</group>
+					</page>
+
+					<page string="FORWARDERS / SHIPPING LINE CHARGES" >
+						<field name="shipping_panel_line">
+							<tree editable="bottom" string="FORWARDERS / SHIPPING LINE CHARGES">
+								<field name='line_charges_id'/>
+								<field name='name'/>
+								<field name='freight'/>
+								<field name='on_carriage' />
+								<field name='thc_fee'/>
+								<field name="ihc_fee"/>
+								<field name="bl_awb_fee"/>
+								<field name="vgm_ens_fee"/>
+								<field name='tc_reciept_fee'/>
+								<field name="custom_duty_fee"/>
+								<field name='dest_exp_fee'/>
+								<field name='transport_fee'/>
+								<field name="shipping_misc_fee" sum="Total"/>
+								<field name='shipping_total_fee' sum="Total"/>
+								<field name='shipping_remarks'/>
+							</tree>
+						</field>
+					</page>
+
+					<page string="OTHER CHARGES" >
+						<group>
+							<group>
+								<field name='other_transport_fee'/>
+								<field name='other_ihc_fee'/>
+								<field name='other_certificate_fee' />
+								<field name='other_insurance' />
+							</group>
+							<group>
+								<field name="other_inspection_fee"/>
+								<field name='other_misc_fee'/>
+								<field name="other_total_fee"/>
+								<field name='other_remarks'/>
+							</group>
+						</group>
+					</page>
+				</notebook>
+			</sheet>
+			</form>
+        </field>
+    </record>
+
+	<record id="gstc_shipping_panel_tree_view" model="ir.ui.view">
+		<field name="name">shipping.panel.tree</field>
+		<field name="model">shipping.panel</field>
+		<field name="arch" type="xml">
+			<tree string="Shipping Panel">
+				<field name='partner_id'/>
+				<field name='country_id'/>
+				<field name='exporter_id' />
+				<field name="incoterm_id"/>
+				<field name="order_no"/>
+				<field name="order_date"/>
+				<field name='mkt_coordinator' groups="base.group_erp_manager"/>
+				<field name='carrier_id'/>
+				<field name='name'/>
+				<field name='date_invoice'/>
+				<field name='amount' sum="Total" style="font-weight: bold;"/>
+				<field name='shippig_cost' sum="Total" style="font-weight: bold;" digits="(14, 0)"/>
+			</tree>
+		</field>
+	</record>
+
+	<record id="custom_filter_shipping_panel" model="ir.ui.view">
+        <field name="name">shipping.panel.filter</field>
+        <field name="model">shipping.panel</field>
+        <field name="arch" type="xml">
+			 <search string="Search Sales Executed">
+	            <field name="exporter_id" string="Exporter" filter_domain="[('name','ilike',self)]"/>
+				<field name="country_id" string="Country"/>
+				<field name="partner_id" string="Buyer"/>
+				<field name="name" string="Invoice" filter_domain="[('invoice','ilike',self)]"/>
+		        <field name="financial_year" string="Financial Year" filter_domain="[('financial_year','ilike',self)]"/>
+				<group expand="1" string="Group By">
+					<filter string="Exporter" context="{'group_by':'exporter_id'}"/>
+					<filter string="Coordinator" context="{'group_by':'mkt_coordinator'}"/>
+					<filter string="Buyer" context="{'group_by':'partner_id'}"/>
+	                <filter string="Country" context="{'group_by':'country_id'}"/>
+		            <filter string="Financial Year" context="{'group_by':'financial_year'}"/>
+		            <filter string="Order Month" context="{'group_by':'order_date'}"/>
+		            <filter string="Executed Month" context="{'group_by':'date_invoice'}"/>
+	            </group>
+			</search>
+        </field>
+    </record>
+
+	
+	<record model="ir.actions.act_window" id="action_shipping_panel_view_form">
+		 <field name="name">Shipping Dashboard</field>
+		 <field name="res_model">shipping.panel</field>
+		 <field name="view_mode">tree,form</field>
+	</record>
+	<menuitem id="menu_gstc_shipping_panel" action="action_shipping_panel_view_form" parent="sales_team.menu_sales" sequence="12"/>
+
+    </data>
+</openerp>

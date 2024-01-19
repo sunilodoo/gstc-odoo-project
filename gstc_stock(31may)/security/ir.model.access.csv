@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_packing_list,packing.list,model_packing_list,base.group_user,1,1,1,1
+access_packing_line,packing.line,model_packing_line,base.group_user,1,1,1,1

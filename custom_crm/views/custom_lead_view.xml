@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+   <!--=======================================custom.lead=============================-->
+    <record id="custom_lead_form_view" model="ir.ui.view">
+      <field name="name">custom.lead.form</field>
+      <field name="model">custom.lead</field>
+      <field name="arch" type="xml">
+         <form string="Custom Lead">
+            <group>
+               <field name='name'/>
+            </group>
+         </form>
+      </field>
+   </record>
+    <record id="custom_lead_tree_view" model="ir.ui.view">
+      <field name="name">custom.lead.tree</field>
+      <field name="model">custom.lead</field>
+      <field name="arch" type="xml">
+         <tree string="Custom Lead">
+            <field name='name'/>
+         </tree>
+      </field>
+   </record>
+   <record model="ir.actions.act_window" id="action_custom_lead">
+       <field name="name">Custom Lead</field>
+       <field name="res_model">custom.lead</field>
+       <field name="view_type">form</field>
+     <field name="view_mode">tree,form</field>
+   </record>
+   <menuitem name="Custom Lead" id="menu_custom_lead" parent="sale.prod_config_main" sequence="12" action="action_custom_lead"/>
+   <!--=======================================custom.lead=============================-->
+	<!-- Project Task Inherit -->
+     <record id="custom_crm_lead_form_view" model="ir.ui.view">
+        <field name="name">crm.lead.form</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+        <field name="arch" type="xml">
+         <!-- <field name="tagging" position="after">
+            <field name="tagging_custom" />
+         </field> -->
+			<field name="priority" position="before">
+				<field name="visitor_no" />
+				<field name="visit_date"/>
+				<field name="classification_id" />
+				<field name="target_value" />
+			</field>
+			<field name="lead_priority" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field>
+			<field name="referred" position="after">
+				<field name="reason_for_n_closure"/>
+			</field>
+         <!--=========================================================================-->
+         <field name="medium_id" position="attributes">
+            <attribute name="invisible">1</attribute>
+         </field>
+         <field name="tagging" position="attributes">
+            <attribute name="invisible">1</attribute>
+         </field>
+         <field name="campaign_id" position="attributes">
+            <attribute name="invisible">1</attribute>
+         </field>
+         <field name="source_id" position="after">
+            <field name="medium_id"/>
+            <field name="tagging"/>
+            <field name="tagging_custom" invisible="1"/>
+            <field name="lead"/>
+            <field name="campaign_id"/>
+         </field>
+        </field>
+    </record>
+    <!-- <record model="ir.actions.act_window" id="crm.crm_lead_opportunities_tree_view">
+            <field name="view_mode">tree,graph,pivot,form,calendar</field>
+      </record>
+ -->
+	<record id="custom_crm_lead_tree_view" model="ir.ui.view">
+        <field name="name">crm.lead.tree</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        <field name="arch" type="xml">
+         <!--==================================================================-->
+         <field name="partner_id" position="attributes">
+            <attribute name="string">Company</attribute>
+         </field>
+         <field name="name" position="attributes">
+            <attribute name="invisible">1</attribute>
+         </field>
+         <field name="partner_id" position="before">
+            <field name="name"/>
+         </field>
+         <field name="country_id" position="attributes">
+            <attribute name="invisible">1</attribute>
+         </field>
+         <field name="team_id" position="attributes">
+            <attribute name="invisible">1</attribute>
+         </field>
+         <field name="tagging" position="attributes">
+            <attribute name="invisible">1</attribute>
+         </field>
+         <field name="partner_id" position="after">
+            <field name="country_id"/>
+            <field name="contact_name"/>
+            <field name="email_from"/>
+            <field name="mobile"/>
+            <field name="phone"/>
+            <field name="source_id"/>
+            <field name="medium_id"/>
+            <field name="tagging"/>
+            <field name="lead"/>
+            <field name="product_interest"/>
+            <field name="team_id"/>
+         </field>
+         <!--=======================================================================-->
+        	<!-- <field name="tagging" position="attributes">
+				<attribute name="invisible">1</attribute>
+			</field> -->
+         <!-- <field name="tagging" position="after">
+            <field name="tagging_custom"/>
+         </field> -->
+			<field name="user_id" position="after">
+				<field name="classification_id"/>
+			</field>
+        </field>
+    </record>
+     <record id="custom_crm_lead_search_view" model="ir.ui.view">
+        <field name="name">crm.lead.search</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+        <field name="arch" type="xml">
+			<group expand="0" string="Group By" colspan="16">
+                       <!--  <filter string="Salesperson" context="{'group_by':'user_id'}"/>
+                        <filter string="Sales Team" context="{'group_by':'team_id'}"/>
+                        <filter string="Country" context="{'group_by':'country_id'}"/>
+                        <filter string="Company" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
+                        <filter name="stage" string="Stage" context="{'group_by':'stage_id'}"/>
+                        <filter string="Campaign" domain="[]" context="{'group_by':'campaign_id'}"/>
+                        <filter string="Medium" domain="[]" context="{'group_by':'medium_id'}"/>
+                        <filter string="Source" domain="[]" context="{'group_by':'source_id'}"/>
+                        <separator orientation="vertical"/>
+                        <filter string="Creation Month" context="{'group_by':'create_date:month'}" name="month"/>
+                        <filter string="Expected Closing Date" context="{'group_by':'date_deadline'}"/>
+                        <filter string="Lost Reason" context="{'group_by':'lost_reason'}"/> -->
+                     <filter name="classification_id" string="Customer Priority" context="{'group_by':'classification_id'}"/>
+                		<filter name="tagging" string="Tags" context="{'group_by':'tagging_custom'}"/>
+                    </group>
+        </field>
+    </record>
+
+	  </data>
+</odoo>

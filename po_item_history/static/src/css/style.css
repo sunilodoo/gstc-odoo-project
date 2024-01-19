@@ -1,0 +1,87 @@
+.custom_size [data-field="product_id"]{
+	min-width: 250px;
+}
+.custom_size [data-field="vendor"]{
+	min-width: 100px;
+	text-align: initial;
+}
+/*.custom_size th{
+    text-align: right;
+}*/
+.custom_size [data-field="total_acheive"]{
+	font-weight: 800;
+	text-align: right;
+}
+.custom_size [data-field="execute"]{
+	font-weight: bold;
+}
+.custom_size [data-field="production"]{
+	font-weight: bold;
+}
+.custom_size .table-responsive {
+    overflow-x: inherit;
+    min-height: 0.01%;
+}
+.custom_size .o_list_view tbody > tr.o_group_header .o_group_name {
+    white-space: inherit;
+}
+.custom_size [data-field="buyer"]{
+	font-size:10px;
+}
+.custom_size [data-field="name"]{
+	font-size:10px;
+}
+.custom_size [data-field="po_coord"]{
+	font-size:10px;
+}
+.custom_size [data-field="d2oedd"]{
+	font-weight: bold;
+}
+.custom_size [data-field="vendor_id"]{
+	font-size:10px;
+}
+.o_list_view tbody > tr.o_group_header .o_group_name {
+    white-space: inherit;
+}
+.table-responsive {
+    overflow-x: inherit;
+    min-height: 0.01%;
+}
+/*.tableFloatingHeader {
+    opacity: 1 !important;
+}*/
+.o_form_view .o_form_sheet_bg .o_form_sheet {
+    max-width: 95%;
+}
+.custom_size [data-field="amount"]{
+    font-weight: 800;
+    text-align: right;
+}
+.custom_size [data-field="amount_inr"]{
+    font-weight: 800;
+    text-align: right;
+}
+/*
+.custom_size table {
+    border-collapse: collapse;
+    overflow-x: scroll;
+    display: block;
+}
+.custom_size thead {
+    background-color: #EFEFEF;
+}
+.custom_size thead, tbody {
+    display: block;
+}
+.custom_size tbody {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 140px;
+}
+.custom_size td, th {
+    min-width: 100px;
+    height: 25px;
+    border: dashed 1px lightblue;
+    overflow:hidden;
+    text-overflow: ellipsis;
+}*/

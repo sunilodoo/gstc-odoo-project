@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <template id="customer_report_template">
+         <t t-call="report.html_container">
+                <div class="page" >
+                    <div style="text-align:left;color:black!important;"><strong><h1>Customer Details </h1></strong></div>
+                    <table class="table table-bordered" >
+                         <thead>
+                            <tr >
+                                <th style="background-color:#9b9da0 !important;">SR No.</th>
+                                <th style="background-color:#9b9da0 !important;">Company Name</th>
+                                <th style="background-color:#9b9da0 !important;">Address</th>
+                                <th style="background-color:#9b9da0 !important;">Country</th>
+                                <th style="background-color:#9b9da0 !important;">Salesperson</th>
+                                <th style="background-color:#9b9da0 !important;">Classification</th>
+                                <th style="background-color:#9b9da0 !important;">Company Profile</th>
+                                <th style="background-color:#9b9da0 !important;">Product of Interest</th>
+                                <th style="background-color:#9b9da0 !important;">Tags</th>
+                                <th style="background-color:#9b9da0 !important;">Email</th>
+                                <th style="background-color:#9b9da0 !important;">Phone</th>
+                                <th style="background-color:#9b9da0 !important;">Mobile</th>
+                                <th style="background-color:#9b9da0 !important;">WhatsApp</th>
+                                <th style="background-color:#9b9da0 !important;">WeChat</th>
+                                <th style="background-color:#9b9da0 !important;">DOB</th>
+                                <th style="background-color:#9b9da0 !important;">DOA</th>
+                                <th style="background-color:#9b9da0 !important;">Religion</th>
+                                <th style="background-color:#9b9da0 !important;">Create Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+							<t t-set="count" t-value="0"/>
+                            <tr t-foreach="docs" t-as="l">
+								<td>
+									<t t-set="count" t-value="count + 1"/>
+                                    <t t-esc="count"/>
+                                </td>
+                                <td>
+                                    <span t-att-style="style" t-esc="l.name"/>
+                                </td>
+                                <td>
+                                   <span t-if="l.street" t-esc="l.street"/>,
+                                   <span t-if="l.street2" t-esc="l.street2"/><br/>
+                                   <span t-if="l.city" t-esc="l.city"/><br/>
+                                   <span t-if="l.state_id" t-esc="l.state_id.name"/><br/>
+                                   <span t-if="l.zip" t-esc="l.zip"/><br/>
+                                </td>
+								<td>
+                                    <span t-att-style="style" t-if="l.country_id" t-esc="l.country_id.name"/>
+                                </td>
+								<td>
+                                    <span t-att-style="style" t-if="l.user_id" t-esc="l.user_id.name"/>
+                                </td>
+								<td>
+                                    <span t-att-style="style" t-if="l.classification_id" t-esc="l.classification_id.name"/>
+                                </td>
+								<td>
+                                    <span t-att-style="style" t-if="l.company_profile" t-esc="', '.join(map(lambda x: x.name, l.company_profile))"/>
+                                </td>
+								<td>
+                                    <span t-att-style="style" t-if="l.product_interest" t-esc="', '.join(map(lambda x: x.name, l.product_interest))"/>
+                                </td>
+								<td>
+                                    <span t-att-style="style" t-if="l.category_id" t-esc="', '.join(map(lambda x: x.name, l.category_id))"/>
+                                </td>
+								<td>
+                                    <span t-att-style="style" t-esc="l.email"/>
+                                </td>
+								<td>
+                                    <span t-att-style="style" t-esc="l.phone"/>
+                                </td>
+								<td>
+                                    <span t-att-style="style" t-esc="l.mobile"/>
+                                </td>
+								<td>
+                                    <span t-att-style="style" t-esc="l.whatsapp"/>
+                                </td>
+								<td>
+                                    <span t-att-style="style" t-esc="l.wechat"/>
+                                </td>
+								<td>
+                                    <span t-att-style="style" t-esc="l.date_birth"/>
+                                </td>
+								<td>
+                                    <span t-att-style="style" t-esc="l.date_aniversary"/>
+                                </td>
+								<td>
+                                    <span t-att-style="style" t-if="l.religion_id" t-esc="', '.join(map(lambda x: x.name, l.religion_id))"/>
+                                </td>
+								<td>
+                                    <span t-att-style="style" t-esc="l.create_date"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+         </t>
+     </template>
+</odoo>

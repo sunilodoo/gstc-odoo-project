@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="executed_sale_excel_report_wizard" model="ir.ui.view">
+            <field name="name">executed.sale.excel.sku</field>
+            <field name="model">executed.sale.excel</field>
+            <field name="arch" type="xml">
+                <form string="Excel Report">
+                    <field name="state" invisible="1"/>
+                    <div states="get">
+                         <group>
+                          	<field name="executed_data" colspan="4"/>
+                            <field name="file_name" filename="executed_data" colspan="4"/>
+                        </group>
+                    </div>
+                    <div states="choose">
+                        <group>
+                            <group>
+                                <field name="start_date" />
+                            </group>
+                            <group>
+                                <field name="end_date"/>
+                            </group>
+                        </group>                                
+                    </div>
+                    <footer states="choose">
+                        <button string="Generate Report" 
+                            class="btn-primary" 
+                            name="get_pro_sale"
+                            type="object"/>
+                        <button string="Cancel" 
+                            class="btn-default" 
+                            special="cancel" />
+                    </footer>
+                    <footer states="get">
+                        <button special="cancel" string="Cancel" class="oe_highlight" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_executed_sale_excel" model="ir.actions.act_window">
+            <field name="name">Executed Sale Excel Report</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">executed.sale.excel</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="executed_sale_excel_report_wizard"/>
+            <field name="target">new</field>
+        </record>
+
+         <menuitem name="Executed Sale Excel Report" id="executed_sale_excel_menu"
+              parent="sales_team.menu_sale_report" sequence="4" action="action_view_executed_sale_excel" groups='base.group_no_one'/>
+</odoo>

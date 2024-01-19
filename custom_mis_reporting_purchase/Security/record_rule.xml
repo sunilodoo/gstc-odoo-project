@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+<data noupdate="1">
+    <record model="ir.rule" id="custom_po_mis_reporting_by_user">
+        <field name="name">Coordinator PO reporting Self</field>
+        <field name="model_id" ref="model_po_mis_reporting"/>
+        <field name="domain_force">[('name.user_id','=',user.id)]</field>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+        <field name="perm_create" eval="True"/>
+    </record>
+    <!--<record model="ir.rule" id="sales_self_customer">
+        <field name="name">Sales Self customer</field>
+        <field name="model_id" ref="model_res_partner"/>
+        <field name="domain_force">[('user_id','=',user.id)]</field>
+        <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman_all_leads')),(4, ref('sales_team.group_sale_salesman')),(4, ref('sales_team.group_sale_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+        <field name="perm_create" eval="True"/>
+    </record>-->
+</data>
+
+</odoo>

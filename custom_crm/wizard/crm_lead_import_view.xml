@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="crm_lead_import_wizard" model="ir.ui.view">
+            <field name="name">crm.lead.import.form</field>
+            <field name="model">crm.lead.import</field>
+            <field name="arch" type="xml">
+            <form string="CRM Lead Import ">
+                <group>
+                    <field name="lead_file" required="1"/>
+                    <field name="tagging_id"/>
+                    <!-- <field name="tagging_id" required="1"/> -->
+                </group>
+
+                <footer>
+                    <button name="lead_create" string="Lead Create" type="object" class="oe_highlight" />
+                    <button name="lead_update" string="Import and Update CRM Lead" type="object" class="oe_highlight" />
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+            </field>
+        </record>
+
+        <record id="action_view_crm_lead_import" model="ir.actions.act_window">
+            <field name="name">CRM Lead Import</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.lead.import</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="crm_lead_import_wizard"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name="CRM Lead Import" id="crm_lead_import_menu"
+        parent="sales_team.menu_sale_report" sequence="8" action="action_view_crm_lead_import"/>
+    </data>
+</odoo>

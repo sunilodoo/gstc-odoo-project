@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+
+     <record id="PO_mis_reporting_form_view" model="ir.ui.view">
+		<field name="name">po_mis.reporting.form</field>
+		<field name="model">po_mis.reporting</field>
+		<field name="arch" type="xml">
+			<form string="MIS Reporting Purchase" >
+				<sheet>
+				<group>
+					<group>
+						<field name='name'/>
+						<field name='po_coord'/>
+						<field name='po_no'/>
+						<field name='buyer'/>
+						<field name='dispatch_month'/>
+					</group>
+					<group>
+						<field name='po_date'/>
+						<field name='edrg'/>
+						<field name='etd'/>
+						<field name='oedd' />
+						<field name='country' />
+						<field name='destination' />
+						<field name='currency' />
+					</group>
+				</group>
+				<group><group><button name="po_detalis" string="View PO" type="object" class='oe_highlight' attrs="{'invisible': [('po_no', '=', False)]}"><i class="fa fa-fw fa-shopping-cart"/></button></group></group>
+				<notebook>
+					<page string="Information">
+						<group>
+							<group>
+								<field name='payment_status'/>
+								<field name='mode'/>
+							</group>
+							<group>
+								<field name='incoterm'/>
+								<field name='payment_term'/>
+							</group>
+						</group>
+						<group>
+							<group>
+								<field name='invoice'/>
+								<field name='invoice_val'/>
+							</group>
+							<group>
+								<field name='invoice_date' />
+							</group>
+						</group>
+						<group>
+							<group>
+								<field name='amount'/>
+								<field name='balance'/>
+							</group>
+							<group>
+								<field name='recvd_amount' />
+							</group>
+						</group>
+					</page>
+					<page string="Remarks">
+						<group>
+							<group>
+								<field name='remarks'/>
+							</group>
+						</group>
+					</page>
+				</notebook>
+				</sheet>
+				<div class="oe_chatter">
+				    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+				    <field name="message_ids" widget="mail_thread"/>
+				</div>
+			</form>
+		</field>
+	</record>
+	<record id="PO_mis_reporting_tree_view" model="ir.ui.view">
+			<field name="name">po_mis.reporting.tree</field>
+			<field name="model">po_mis.reporting</field>
+			<field name="arch" type="xml">
+				<tree string="MIS Reporting Purchase" class='custom_size'>
+					<field name='name' />
+					<field name='po_coord'/>
+					<field name='buyer' style="align:right;"/>
+					<field name='po_no' />
+					<field name='etd' />
+					<field name='oedd' />
+					<field name='country' />
+					<field name='amount' sum="Amount"/>
+					<field name='payment_status'/>
+					<field name='recvd_amount' sum="Received Amount"/>
+					<field name='balance'/>
+					<field name='invoice'/>
+					<field name='invoice_date' />
+					<field name='invoice_val' sum="invoice Value"/>
+				</tree>
+			</field>
+	</record>
+	
+	<record id="custom_filter_POmis_reporting" model="ir.ui.view">
+            <field name="name">po_mis.reporting.filter</field>
+            <field name="model">po_mis.reporting</field>
+            <field name="arch" type="xml">
+				 <search string="Search PO MIS">
+		            <field name="name" string="Coordinator" filter_domain="[('name','ilike',self)]"/>
+					<field name="country" string="Country"/>
+					<field name="po_coord" string="PO Coordinator"/>
+					<field name="buyer" string="Buyer"/>
+					<field name="po_no" string="PO Number" filter_domain="[('po_no','ilike',self)]"/>
+					<field name="invoice" string="Invoice" filter_domain="[('invoice','ilike',self)]"/>
+					<group expand="1" string="Group By">
+		                <filter string="Coordinator" context="{'group_by':'name'}"/>
+						<filter string="SO Coordinator" context="{'group_by':'po_coord'}"/>
+		                <filter string="Buyer" context="{'group_by':'buyer'}"/>
+		                <filter string="SO" context="{'group_by':'po_no'}"/>
+		                <filter string="Month" context="{'group_by':'etd'}"/>
+		            </group>
+				</search>
+            </field>
+        </record>
+
+	<!-- ####### Payment Status ######## -->
+	<record id="payment_status_form_view" model="ir.ui.view">
+		<field name="name">payment.status.form</field>
+		<field name="model">payment.status</field>
+		<field name="arch" type="xml">
+			<form string="Payment Status" >
+				<sheet><group><group>
+				<field name='name'/>
+				</group></group></sheet>
+			</form>
+		</field>
+	</record>
+	<record id="payment_status_tree_view" model="ir.ui.view">
+		<field name="name">payment.status.tree</field>
+		<field name="model">payment.status</field>
+		<field name="arch" type="xml">
+			<tree string="Payment Status" >
+				<field name='name'/>
+			</tree>
+		</field>
+	</record>
+
+	
+	<record model="ir.actions.act_window" id="action_payment_status_form">
+		 <field name="name">Payment Status</field>
+		 <field name="res_model">payment.status</field>
+		 <field name="view_mode">tree,form</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_POmis_reporting_form">
+		 <field name="name">Reporting Purchase(PO)</field>
+		 <field name="res_model">po_mis.reporting</field>
+		 <field name="view_mode">tree,form</field>
+	</record>
+	<!--<menuitem name="MIS Reporting(Purchase)"
+            id="menu_POmis_report"
+            sequence="101" groups="base.group_user"/>-->
+
+        <menuitem name="MIS Reporting(Purchase)"
+            id="submenu_POmis_reporting"
+            parent="custom_mis_reporting.menu_mis_report"
+            sequence="1"/>
+		<menuitem name="Purchase(PO)" id="menu_POmis" parent="submenu_POmis_reporting"
+		            sequence="1" action="action_POmis_reporting_form"/>
+
+		<menuitem name="Payment Status" id="menu_payment_state" parent="submenu_POmis_reporting" groups="base.group_erp_manager"
+		            sequence="2" action="action_payment_status_form"/>
+
+  </data>
+</odoo>

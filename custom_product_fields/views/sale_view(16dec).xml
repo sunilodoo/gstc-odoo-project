@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <data>
+
+    <!-- Sale Order Line Inherit -->
+     <record id="custom_sale_order_view" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+			<xpath expr="//field[@name='order_line']/tree//field[@name='price_unit']" position="after">
+				<field name="cartons" digits="(14, 4)" readonly="1"/>
+				<field name="vol_wt" digits="(14, 4)" readonly="1"/>
+				<field name="cbm" digits="(14, 4)" readonly="1"/>
+				<field name="total_nwt_crtn" digits="(14, 4)" readonly="1"/>
+				<field name="total_gwt_crtn" digits="(14, 4)" readonly="1"/>
+				<field name="total_vol_wt" digits="(14, 4)" readonly="1"/>
+			</xpath>
+			<xpath expr="//field[@name='order_line']/tree//field[@name='name']" position="before">
+				<field name="is_descr"/>
+				<field name="hsn_code"/>
+			</xpath>
+        </field>
+    </record>
+  </data>
+</odoo>
